@@ -1,7 +1,7 @@
 # (gitmoji) <type> : <title><issue number>
 
 ##### Keep the title to a maximum of 50 characters on one line with issue number ## -> |
-                                                  
+
 # Write the body here
 
 ######## Keep each line in the body to a maximum of 72 characters ############### -> |
@@ -10,28 +10,27 @@
 
 # <type> list:
 
-# ✨feat: Feature (introduce new feature)
+# ✨(:sparkles:) feat: Feature (introduce new feature)
 
-# 🐛fix: Bug (fix a bug)
+# 🐛(:bug:) fix: Bug (fix a bug)
 
-# ♻refactor: Refactoring (code changes that neither fixes a bug nor adds a feature)
+# ♻(:recycle:) refactor: Refactoring (code changes that neither fixes a bug nor adds a feature)
 
-# 💄style: Style (UI or cosmetic changes)
+# 💄(:lipstick:) style: Style (UI or cosmetic changes)
 
-# 📝docs: Documentation (changes or updates to docs)
+# 📝(:memo:) docs: Documentation (changes or updates to docs)
 
-# ✅test: Tests (add, modify, or delete tests, no business logic changes)
+# ✅(:white_check_mark:) test: Tests (add, modify, or delete tests, no business logic changes)
 
-# 🔨chore: Chore (miscellaneous updates such as build script changes, dependencies updates)
+# 🔨(:hammer:) chore: Chore (miscellaneous updates such as build script changes, dependencies updates)
 
-# 🎉init: Initial commit (first commit in a repository)
+# 🚀(:rocket:) perf: Performance (improve performance)
 
-# 🚀perf: Performance (improve performance)
+# 🐎(:racehorse:) opt: Optimization (improve code efficiency)
 
-# 🐎opt: Optimization (improve code efficiency)
+# 💥(:boom:) breaking: Breaking changes (introduce breaking changes)
 
-# 🗑cleanup: Cleanup (remove unnecessary code or files)
-
+# 🎉(:tada:) init: Initial commit (first commit in a repository)
 # ------------------
 
 # Use imperative mood in the title
