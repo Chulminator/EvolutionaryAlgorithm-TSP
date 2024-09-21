@@ -1,23 +1,21 @@
 
 #include <iostream>
-#include <vector>
-#include <array>
-#include <math.h>
-#include <stdio.h>
-#include <algorithm>
-#include <random>
-#include "./include/TSP.hpp"
-// #include "./include/evolution.hpp"
+#include "./include/EA/TSP.hpp"
+#include "./include/Visualization/Visualize.hpp"
 
 
 int main(){
-// // // // // // input // // // // // //
-    int nCity        = 10; // The number of city
-    int nChromosome  = 10; // The number of Chromosome
+    Visualization visualization;
+    visualization.run();
+    printf("Hello world\n");
+// // // // // // // input // // // // // //
+//     int nCity        = 10; // The number of city
+//     int nChromosome  = 10; // The number of Chromosome
+// // // // // // // input // // // // // //
 
-    TSP tsp(nCity, nChromosome);
-    tsp.solve();
+//     TSP tsp(nCity, nChromosome);
+//     tsp.solve();
 
-    return 0;
+//     return 0;
 
 }

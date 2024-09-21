@@ -1,18 +1,18 @@
 # 변수 설정
 CC = g++
 TARGET = EvolutionaryAlgorithm.exe # 빌드 대상
-# LIB_DIR = src/lib/ # SFML 라이브러리 디렉토리
-# INCLUDE_DIR = C:\SFML\include # SFML 헤더 파일 디렉토리
+LIB_DIR = src/lib/ # SFML 라이브러리 디렉토리
+INCLUDE_DIR = C:\SFML\include # SFML 헤더 파일 디렉토리
 SRCINCLUDE_DIR = include\\
 
 
-# CFLAGS = -I$(INCLUDE_DIR)
-# LDFLAGS = -L$(LIB_DIR)
-# LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
+CFLAGS = -I$(INCLUDE_DIR)
+LDFLAGS = -L$(LIB_DIR)
+LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
 
 
 # 소스 파일 목록
-SRCINCLUDE = evolution.cpp TSP.cpp
+SRCINCLUDE = EA\\evolution.cpp EA\\TSP.cpp Visualization\\Visualize.cpp Visualization\\Utility.cpp Visualization\\state.cpp Visualization\\stateStack.cpp Visualization\\SoundPlayer.cpp Visualization\\MusicPlayer.cpp Visualization\\CommandQueue.cpp Visualization\\State\\StateLogo.cpp Visualization\\GUI\\Button.cpp Visualization\\GUI\\Component.cpp Visualization\\GUI\\Container.cpp Visualization\\GUI\\Label.cpp Visualization\\State\\StateHome.cpp
 SRCINCLUDE := $(addprefix $(SRCINCLUDE_DIR), $(SRCINCLUDE))
 SRCS = main.cpp $(SRCINCLUDE)
 
