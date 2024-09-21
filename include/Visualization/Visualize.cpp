@@ -18,11 +18,12 @@ Visualization::Visualization()
 	mWindow.setVerticalSyncEnabled(true);
  	// Font load
 	mFonts.load(Fonts::Main, 	"Media/Sansation.ttf");
+	mFonts.load(Fonts::Main2, 	"Media/times.ttf");
 	// Textures load
 	mTextures.load(Textures::ProfilePhoto, "Media/Textures/ProfilePhoto.png");	
 	registerStates();	
-	mStateStack.pushState(States::Home);
-	// mStateStack.pushState(States::Logo);	
+	// mStateStack.pushState(States::Home);
+	mStateStack.pushState(States::Logo);
 	mMusic.setVolume(25.f);
 }
 

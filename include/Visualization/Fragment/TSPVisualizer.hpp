@@ -1,52 +1,13 @@
-#ifndef TRAVELLINGPROB
-#define TRAVELLINGPROB
-
-#define PI 3.141592653589793
-
-#include <numeric> // iota
-#include <cmath>
-#include <vector>
-#include <array>
-#include <algorithm>
-#include <ctime>  // std::time
-#include <time.h>
-#include <unordered_set>
-#include "evolution.hpp"
+#pragma once
 
 using namespace std; // use a namespace
 
-
-class TSP {
+class TSPVisualizer {
 public: 
-    TSP(int nCity_, int nChromosome_);
-
-    void generateCity();
-
-    void generateChromosome(); 
-
-    void CalculateFitness();
-    
-    int randomSelect(int num);
-    
-    void sortChromosome();
-    
-    const int getGeneration();
-
-    void initSortIndex();
-    
-    bool endCondition();
-
-    void crossover();
-
-    void mutation();
-
-    void newChromosome();
-    
-    void previousChromosome();
-
-    void solve();  
+    TSPVisualizer(int nCity_, int nChromosome_);
 
 private:
+    // std::vector< std:: >
     int nCity;
     int nChromosome;
 
@@ -80,4 +41,3 @@ private:
 
 };
 
-#endif

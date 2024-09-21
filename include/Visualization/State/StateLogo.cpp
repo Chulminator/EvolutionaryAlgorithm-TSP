@@ -68,7 +68,7 @@ bool StateLogo::handleEvent(const sf::Event& event)
 	{
 		music->stop();
 		requestStackPop();
-		// requestStackPush(States::Home);
+		requestStackPush(States::Home);
 	}
 
 	return true;
