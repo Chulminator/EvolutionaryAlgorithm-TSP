@@ -1,0 +1,14 @@
+name: Visualization
+description: Visualization
+title: ":lipstick: visualization : "
+labels: ["visualization"]
+body:
+  - type: textarea
+    id: feature
+    attributes:
+      label: Content
+      description: Please describe the parts that have been created or edited.
+      value: |
+        -
+    validations:
+      required: true
