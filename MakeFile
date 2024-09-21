@@ -1,0 +1,34 @@
+# 변수 설정
+CC = g++
+TARGET = EvolutionaryAlgorithm.exe # 빌드 대상
+# LIB_DIR = src/lib/ # SFML 라이브러리 디렉토리
+# INCLUDE_DIR = C:\SFML\include # SFML 헤더 파일 디렉토리
+SRCINCLUDE_DIR = include\\
+
+
+# CFLAGS = -I$(INCLUDE_DIR)
+# LDFLAGS = -L$(LIB_DIR)
+# LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
+
+
+# 소스 파일 목록
+SRCINCLUDE = evolution.cpp TSP.cpp
+SRCINCLUDE := $(addprefix $(SRCINCLUDE_DIR), $(SRCINCLUDE))
+SRCS = main.cpp $(SRCINCLUDE)
+
+# 객체 파일 목록 (소스 파일을 컴파일하여 생성됨)
+OBJS = $(SRCS:.cpp=.o)
+
+# 빌드 규칙
+$(TARGET): $(OBJS)
+	$(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) 
+# $(CC) $(LDFLAGS) -o $@ $(OBJS) $(LIBS) -mwindows
+
+%.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# clean 대상
+clean:
+	del /F $(OBJS) $(TARGET)
+
+re: clean $(TARGET)
