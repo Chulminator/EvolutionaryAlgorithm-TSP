@@ -1,13 +1,13 @@
 # 변수 설정
 CC = g++
 TARGET = EvolutionaryAlgorithm.exe # 빌드 대상
-LIB_DIR = src/lib/ # SFML 라이브러리 디렉토리
-INCLUDE_DIR = C:\SFML\include # SFML 헤더 파일 디렉토리
+LIB_SFML_DIR = src/lib/ # SFML 라이브러리 디렉토리
+INCLUDE_SFML_DIR = C:\SFML\include # SFML 헤더 파일 디렉토리
 SRCINCLUDE_DIR = include\\
 
 
-CFLAGS = -I$(INCLUDE_DIR)
-LDFLAGS = -L$(LIB_DIR)
+CFLAGS = -I$(INCLUDE_SFML_DIR)
+LDFLAGS = -L$(LIB_SFML_DIR)
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
 
 

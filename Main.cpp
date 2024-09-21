@@ -5,8 +5,8 @@
 
 
 int main(){
-    // Visualization visualization;
-    // visualization.run();
+    Visualization visualization;
+    visualization.run();
     // printf("Hello world\n");
 // // // // // // // // input // // // // // //
 //     int nCity        = 10; // The number of city
