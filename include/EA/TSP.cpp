@@ -4,7 +4,8 @@
 
 
 TSP::TSP(int nCity_, int nChromosome_)
-: nCity(nCity_), nChromosome(nChromosome_) 
+: nCity(nCity_)
+, nChromosome(nChromosome_) 
 , coord(nCity_) 
 , vecChromosome(nChromosome_, vector<int>(nCity))
 , vecNewChromosome(nChromosome_, vector<int>(nCity))
@@ -16,9 +17,11 @@ TSP::TSP(int nCity_, int nChromosome_)
 , idxChromosome(0)
 , mutationRate(0.3)
 , crossoverRate(0.4)
+, isOver(true)
 {
   generateCity();
   generateChromosome();
+  vecNewChromosome = vecChromosome;
 
   nPrevious      = static_cast<int>(nChromosome * 0.2); 
   nNewlyCreation = static_cast<int>(nChromosome * 0.2);
@@ -35,9 +38,46 @@ TSP::TSP(int nCity_, int nChromosome_)
   printf("==================================\n");
 }
 
+void TSP::reset(int nCity_, int nChromosome_) {
+  nCity       = nCity_;
+  nChromosome = nChromosome_; 
+  nGeneration = 1;
+
+  coord.clear();
+  vecChromosome.clear();
+  vecNewChromosome.clear();
+  vecDistance.clear();
+  idxSort.clear();
+ 
+  coord.resize(nCity_);
+  vecChromosome.resize(nChromosome_, std::vector<int>(nCity_));
+  vecNewChromosome.resize(nChromosome_, std::vector<int>(nCity_));
+  vecDistance.resize(nChromosome_, 0.0);
+  idxSort.resize(nChromosome_); 
+
+  generateCity();
+  generateChromosome();
+  vecNewChromosome = vecChromosome;
+
+  nPrevious      = static_cast<int>(nChromosome * 0.2); 
+  nNewlyCreation = static_cast<int>(nChromosome * 0.2);
+  nCrossover     = static_cast<int>(nChromosome * 0.3);
+  nMutation      = nChromosome - nPrevious - nNewlyCreation - nCrossover;
+
+  nParent        = static_cast<int>(nChromosome * 0.5);
+  
+  printf("==================================\n");
+  printf("Chromosome from the previous:\t%d\n", nPrevious);
+  printf("Chromosome newly created:\t%d\n", nNewlyCreation);
+  printf("Chromosome from the Crossover:\t%d\n", nCrossover);
+  printf("Chromosome from the Mutation:\t%d\n", nMutation);
+  printf("==================================\n");
+}
 void TSP::generateCity() {
   for (int ii = 0; ii < nCity; ii++) {
     double theta = ii / static_cast<double>(nCity) * PI * 2.0;
+    // coord[ii][0] = cos(theta)*100.;
+    // coord[ii][1] = sin(theta)*100.;
     coord[ii][0] = cos(theta);
     coord[ii][1] = sin(theta);
   }
@@ -76,6 +116,11 @@ int TSP::randomSelect(int num){
   return dis(gen);
 }
 
+const int TSP::getGeneration() const{
+  return nGeneration;
+}
+
+
 void TSP::sortChromosome(){
   initSortIndex();
   std::sort (idxSort.begin (), idxSort.end (), [this] 
@@ -89,10 +134,10 @@ void TSP::initSortIndex(){
   std::iota(idxSort.begin(), idxSort.end(), 0);  
 }
 
-bool TSP::endCondition(){
+const bool TSP::endCondition(){
   vecChromosome = vecNewChromosome;
   ++nGeneration;
-  return vecDistance[idxSort[0]] > PI * 2 * 1.1;
+  return vecDistance[idxSort[0]] > PI * 2 * 1.05;
 }
 
 void TSP::crossover(){
@@ -137,10 +182,6 @@ void TSP::newChromosome(){
     }    
     std::shuffle(vecNewChromosome[idxChromosome].begin(), vecNewChromosome[idxChromosome].end(), engine);
     idxChromosome++; 
-    // for (int jj = 0; jj < nCity; jj++) {
-    //   printf("%d ", vecNewChromosome[jj]);
-    // }
-    // printf("\n");
   }
   return;
 }
@@ -153,6 +194,7 @@ void TSP::previousChromosome(){
 }
 
 void TSP::solve(){
+  isOver = false;
   do {    
     // Evolutionary algorithm
     crossover();
@@ -166,13 +208,25 @@ void TSP::solve(){
     printf("Generation: %d | Shortest distance: %e \n", nGeneration, vecDistance[idxSort[0]]);
 
   }while( endCondition() );
-  
+  isOver = true;
   for ( int jj = 0; jj < nCity; ++jj ){        
     printf( "%d ", vecNewChromosome[idxSort[0]][jj]);
   }
 }
 
+const bool TSP::isAnalysisOver() const{
+  return isOver;
+}
     
+const vector<int>& TSP::getBestChromosome() const{  
+  return vecNewChromosome[0];
+}
+
+vector<array<double, 2>> TSP::getCoords() const{
+  return coord;
+}
+
+
     // if( idxSort[0] < nCrossover){
     //   printf("Crossover\n");
     // }

@@ -1,18 +1,19 @@
-# 변수 설정
+# SFML library directories
 CC = g++
-TARGET = EvolutionaryAlgorithm.exe # 빌드 대상
-LIB_SFML_DIR = src/lib/ # SFML 라이브러리 디렉토리
-INCLUDE_SFML_DIR = C:\SFML\include # SFML 헤더 파일 디렉토리
+TARGET = EvolutionaryAlgorithm.exe # Build target
+
+LIB_SFML_DIR = src/SFML_lib/ # SFML library directory
+INCLUDE_SFML_DIR = C:\SFML\include # SFML header files directory
+
 SRCINCLUDE_DIR = include\\
 
-
-CFLAGS = -I$(INCLUDE_SFML_DIR)
+CFLAGS = -I$(INCLUDE_SFML_DIR) -I$(INCLUDE_GRAPHMASTER_DIR) -Wall
 LDFLAGS = -L$(LIB_SFML_DIR)
 LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
 
 
 # 소스 파일 목록
-SRCINCLUDE = EA\\evolution.cpp EA\\TSP.cpp Visualization\\Visualize.cpp Visualization\\Utility.cpp Visualization\\state.cpp Visualization\\stateStack.cpp Visualization\\SoundPlayer.cpp Visualization\\MusicPlayer.cpp Visualization\\CommandQueue.cpp Visualization\\State\\StateLogo.cpp Visualization\\GUI\\Button.cpp Visualization\\GUI\\Component.cpp Visualization\\GUI\\Container.cpp Visualization\\GUI\\Label.cpp Visualization\\State\\StateHome.cpp
+SRCINCLUDE = EA\\evolution.cpp EA\\TSP.cpp Visualization\\PauseableClock.cpp Visualization\\Visualize.cpp Visualization\\Utility.cpp Visualization\\state.cpp Visualization\\stateStack.cpp Visualization\\SoundPlayer.cpp Visualization\\MusicPlayer.cpp Visualization\\CommandQueue.cpp Visualization\\State\\StateLogo.cpp Visualization\\GUI\\Button.cpp Visualization\\GUI\\Component.cpp Visualization\\GUI\\Container.cpp Visualization\\GUI\\Label.cpp Visualization\\State\\StateHome.cpp Visualization\\Fragment\\TSPVisualizer.cpp 
 SRCINCLUDE := $(addprefix $(SRCINCLUDE_DIR), $(SRCINCLUDE))
 SRCS = main.cpp $(SRCINCLUDE)
 

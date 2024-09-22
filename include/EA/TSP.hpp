@@ -12,6 +12,7 @@
 #include <time.h>
 #include <unordered_set>
 #include "evolution.hpp"
+#include "../Visualization/Fragment/TSPVisualizer.hpp"
 
 using namespace std; // use a namespace
 
@@ -19,6 +20,8 @@ using namespace std; // use a namespace
 class TSP {
 public: 
     TSP(int nCity_, int nChromosome_);
+
+    void reset(int nCity_, int nChromosome_);
 
     void generateCity();
 
@@ -30,11 +33,11 @@ public:
     
     void sortChromosome();
     
-    const int getGeneration();
+    const int getGeneration() const;
 
     void initSortIndex();
     
-    bool endCondition();
+    const bool endCondition();
 
     void crossover();
 
@@ -46,15 +49,22 @@ public:
 
     void solve();  
 
+    const bool isAnalysisOver() const;  
+
+    const vector<int>& getBestChromosome() const;
+
+    // const vector<array<double, 2>>& getCoords() const;
+    vector<array<double, 2>> getCoords() const;
+
 private:
     int nCity;
     int nChromosome;
 
     // Chromosome
+    int nPrevious;
+    int nNewlyCreation;
     int nCrossover;
     int nMutation;
-    int nNewlyCreation;
-    int nPrevious;
 
     // The number of parents pool to be selected
     int nParent;
@@ -63,6 +73,7 @@ private:
     double mutationRate; 
     double crossoverRate; 
 
+    bool   isOver;
 
     // To update new chromosome;
     unsigned int idxChromosome; 
@@ -77,7 +88,6 @@ private:
     std::mt19937 gen; // Mersenne Twister engine
 
     EvolutionaryAlgorithm evol;
-
 };
 
 #endif
