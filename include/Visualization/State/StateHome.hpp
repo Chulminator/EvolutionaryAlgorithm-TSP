@@ -26,6 +26,7 @@ class StateHome : public State
 	private:
 		void 						resetTSP();
 		void 						proceedTSP();
+		void 						setVisualizer();
 
 	private:
     sf::RenderWindow&	 mWindow;

@@ -10,12 +10,13 @@
 
 namespace GUI
 {
-
 Button::Button(State::Context context)
 : mCallback()
+, mWindow(*context.window)
 // , mSprite(context.textures->get(Textures::Buttons))
 , mBox(sf::Vector2f(100, 50))
-, mText("", context.fonts->get(Fonts::Main2), 35)
+// , mText("", context.fonts->get(Fonts::Main2), 35)
+, mText("", context.fonts->get(Fonts::Main2), context.window->getSize().x/25)
 , mIsToggle(false)
 , mSounds(*context.sounds)
 , mIsSelectable(true)
@@ -32,7 +33,9 @@ void Button::setCallback(Callback callback)
 
 void Button::setText(const std::string& text)
 {
-	mBox.setSize(sf::Vector2f(text.length()*20., 50.));
+	
+	// mBox.setSize(sf::Vector2f(text.length()*20., 50.));
+	mBox.setSize(sf::Vector2f(text.length()*20., mWindow.getSize().x/16));
 	mText.setString(text);
 	centerOrigin(mText);
 	mText.setPosition(text.length()*10., 25.);

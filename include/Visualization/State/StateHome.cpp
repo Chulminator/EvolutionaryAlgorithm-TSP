@@ -12,7 +12,7 @@ StateHome::StateHome(StateStack& stack, Context context)
 , music(context.music)
 , mSounds(*context.sounds)
 , stateTime()
-, tsp( 20, 150 )
+, tsp( 20, 300 )
 , visualizer( )
 , evolutionFlag( true )
 , accumulatedTime(sf::Time::Zero)
@@ -29,43 +29,37 @@ StateHome::StateHome(StateStack& stack, Context context)
 	startButton->setText("Start");
 	spriteBounds = startButton->getLocalBounds();
 	startButton->setOrigin(spriteBounds.left + spriteBounds.width / 2.0f, spriteBounds.top + spriteBounds.height / 2.0f);
-	startButton->setPosition(windowSizeX*0.5, windowSizeY*0.5-spriteBounds.height);
+	startButton->setPosition(windowSizeX*0.5, windowSizeY*0.5-spriteBounds.height/2);
 	startButton->setCallback([this] ()
 	{
 		requestStateClear();
 	});
 	
-	auto tutorialButton = std::make_shared<GUI::Button>(context);	
-	tutorialButton->setText("Tutorial");
-	spriteBounds = tutorialButton->getLocalBounds();
-	tutorialButton->setOrigin(spriteBounds.left + spriteBounds.width / 2.0f, spriteBounds.top + spriteBounds.height / 2.0f);
-	tutorialButton->setPosition(windowSizeX*0.5, windowSizeY*0.5);
-	tutorialButton->setCallback([this] ()
-	{
-		requestStateClear();
-	});
+	// auto tutorialButton = std::make_shared<GUI::Button>(context);	
+	// tutorialButton->setText("Tutorial");
+	// spriteBounds = tutorialButton->getLocalBounds();
+	// tutorialButton->setOrigin(spriteBounds.left + spriteBounds.width / 2.0f, spriteBounds.top + spriteBounds.height / 2.0f);
+	// tutorialButton->setPosition(windowSizeX*0.5, windowSizeY*0.5);
+	// tutorialButton->setCallback([this] ()
+	// {
+	// 	requestStateClear();
+	// });
 
 	auto exitButton = std::make_shared<GUI::Button>(context);
 	exitButton->setText("Quit");
 	spriteBounds = exitButton->getLocalBounds();
 	exitButton->setOrigin(spriteBounds.left + spriteBounds.width / 2.0f, spriteBounds.top + spriteBounds.height / 2.0f);
-	exitButton->setPosition(windowSizeX*0.5, windowSizeY*0.5+spriteBounds.height);
+	exitButton->setPosition(windowSizeX*0.5, windowSizeY*0.5+spriteBounds.height/2);
 	exitButton->setCallback([this] ()
 	{
 		requestStateClear();
 	});
 
 	mGUIContainer.pack(startButton);
-	mGUIContainer.pack(tutorialButton);
+	// mGUIContainer.pack(tutorialButton);
 	mGUIContainer.pack(exitButton);	
 		
-	vector<array<float, 2>> coords = tsp.getCoords();
-	for (auto& element : coords) {
-			element[0] *= 200;
-			element[1] *= 200;
-	}
-	visualizer.setGeometry(tsp.getBestChromosome(), coords);
-	visualizer.setPosition(windowSizeX/2, windowSizeY/2);
+	setVisualizer();
 
 }
 
@@ -82,11 +76,13 @@ bool StateHome::update(sf::Time dt)
 	sf::Time elapsedTime = stateTime.getElapsedTime();
 	accumulatedTime += dt;
 
-	if ( elapsedTime > sf::seconds(3.f) && evolutionFlag == true){
+	if ( elapsedTime >= sf::seconds(2.f) && evolutionFlag == true){
+		// printf("proceedTSP\n");
 		proceedTSP();
 	}
 
-	if( accumulatedTime >= sf::seconds(3.f) && evolutionFlag == false ){
+	if( accumulatedTime >= sf::seconds(2.f) && evolutionFlag == false ){
+		// printf("resetTSP\n");
 		resetTSP();
 	}
 
@@ -114,27 +110,15 @@ void StateHome::resetTSP(){
 	// std::uniform_int_distribution<> dis1(150, 300); // 균일 분포
 	// int nChromosome = dis1(gen);
 	tsp.reset(nCity, nCity*nCity);
-	vector<array<float, 2>> coords = tsp.getCoords();
-	for (auto& element : coords) {
-			element[0] *= 200.;
-			element[1] *= 200.;
-	}
-	visualizer.setGeometry(tsp.getBestChromosome(), coords);
-	visualizer.setPosition(windowSize.x/2, windowSize.y/2);	
+	setVisualizer();
 }
 
 void StateHome::proceedTSP(){
 	tsp.solveOneStep();
 	// printf("\tAnalysis ing\n");		
-	if( accumulatedTime >= sf::seconds(1.f) || tsp.isAnalysisOver()){
+	if( accumulatedTime >= sf::seconds(0.1f) || tsp.isAnalysisOver()){
 		accumulatedTime = sf::Time::Zero;
-		vector<array<float, 2>> coords = tsp.getCoords();
-		for (auto& element : coords) {
-				element[0] *= 200.;
-				element[1] *= 200.;
-		}
-		visualizer.setGeometry(tsp.getBestChromosome(), coords);
-		visualizer.setPosition(windowSize.x/2, windowSize.y/2);
+		setVisualizer();
 		// printf("\tScreen update\n");
 	}
 
@@ -142,4 +126,14 @@ void StateHome::proceedTSP(){
 		evolutionFlag = false;
 		accumulatedTime = sf::Time::Zero;
 	}	
+}
+
+void StateHome::setVisualizer(){
+	vector<array<float, 2>> coords = tsp.getCoords();
+	for (auto& element : coords) {
+			element[0] *= windowSize.x/4;
+			element[1] *= windowSize.x/4;
+	}
+	visualizer.setGeometry(tsp.getBestChromosome(), coords);
+	visualizer.setPosition(windowSize.x/2, windowSize.y/2);
 }

@@ -3,7 +3,9 @@
 const sf::Time Visualization::TimePerFrame = sf::seconds(1.f/60.f);
 
 Visualization::Visualization()
-: mWindow(sf::VideoMode(800, 600), "Tetris Chulminator", sf::Style::Close, createContextSettings())
+// : mWindow(sf::VideoMode(800, 600), "Evolutionary algorithm", sf::Style::Close | sf::Style::Resize, createContextSettings())
+// : mWindow(sf::VideoMode(1200, 900), "Evolutionary algorithm", sf::Style::Close, createContextSettings())
+: mWindow(sf::VideoMode(1200, 900), "Evolutionary algorithm", sf::Style::Close | sf::Style::Resize, createContextSettings())
 , mTextures()
 , mFonts()
 , mMusic()

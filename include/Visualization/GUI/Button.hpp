@@ -72,6 +72,7 @@ class Button : public Component
         bool					mIsToggle;
 		SoundPlayer&			mSounds;
 		bool        			mIsSelectable;
+        sf::RenderWindow&	    mWindow;
 };
 
 }
