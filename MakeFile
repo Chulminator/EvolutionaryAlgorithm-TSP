@@ -13,7 +13,7 @@ LIBS = -lsfml-graphics -lsfml-window -lsfml-system -lopengl32 -lsfml-audio
 
 
 # 소스 파일 목록
-SRCINCLUDE = EA\\evolution.cpp EA\\TSP.cpp Visualization\\PauseableClock.cpp Visualization\\Visualize.cpp Visualization\\Utility.cpp Visualization\\state.cpp Visualization\\stateStack.cpp Visualization\\SoundPlayer.cpp Visualization\\MusicPlayer.cpp Visualization\\CommandQueue.cpp Visualization\\State\\StateLogo.cpp Visualization\\GUI\\Button.cpp Visualization\\GUI\\Component.cpp Visualization\\GUI\\Container.cpp Visualization\\GUI\\Label.cpp Visualization\\State\\StateHome.cpp Visualization\\Fragment\\TSPVisualizer.cpp 
+SRCINCLUDE = EA\\evolution.cpp EA\\TSP.cpp Visualization\\PauseableClock.cpp Visualization\\Visualize.cpp Visualization\\Utility.cpp Visualization\\state.cpp Visualization\\stateStack.cpp Visualization\\SoundPlayer.cpp Visualization\\MusicPlayer.cpp Visualization\\CommandQueue.cpp Visualization\\State\\StateLogo.cpp Visualization\\GUI\\Button.cpp Visualization\\GUI\\Component.cpp Visualization\\GUI\\Container.cpp Visualization\\GUI\\Label.cpp Visualization\\State\\StateHome.cpp Visualization\\State\\StateMain.cpp Visualization\\Fragment\\TSPVisualizer.cpp 
 SRCINCLUDE := $(addprefix $(SRCINCLUDE_DIR), $(SRCINCLUDE))
 SRCS = main.cpp $(SRCINCLUDE)
 

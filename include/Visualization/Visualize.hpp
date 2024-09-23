@@ -14,6 +14,7 @@
 #include "./State/StateIdentifiers.hpp"
 #include "./State/StateLogo.hpp"
 #include "./State/StateHome.hpp"
+#include "./State/StateMain.hpp"
 
 class Visualization : private sf::NonCopyable
 {

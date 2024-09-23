@@ -32,7 +32,8 @@ StateHome::StateHome(StateStack& stack, Context context)
 	startButton->setPosition(windowSizeX*0.5, windowSizeY*0.5-spriteBounds.height/2);
 	startButton->setCallback([this] ()
 	{
-		requestStateClear();
+		requestStackPop();
+		requestStackPush(States::Main);
 	});
 	
 	// auto tutorialButton = std::make_shared<GUI::Button>(context);	

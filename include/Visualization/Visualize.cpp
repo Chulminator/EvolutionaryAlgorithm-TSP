@@ -80,6 +80,7 @@ void Visualization::registerStates()
 {
 	mStateStack.registerState<StateLogo>(States::Logo);
 	mStateStack.registerState<StateHome>(States::Home);
+	mStateStack.registerState<StateMain>(States::Main);
 }
 
 sf::ContextSettings Visualization::createContextSettings() {

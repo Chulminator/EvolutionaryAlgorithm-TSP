@@ -8,5 +8,6 @@ namespace States
 		None,
 		Logo,
 		Home,
+		Main,
 	};
 }
