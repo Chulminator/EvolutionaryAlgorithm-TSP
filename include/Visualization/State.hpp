@@ -1,7 +1,7 @@
 #ifndef BOOK_STATE_HPP
 #define BOOK_STATE_HPP
 
-#include "./State/StateIdentifiers.hpp"
+#include "./States/StateIdentifiers.hpp"
 #include "ResourceIdentifiers.hpp"
 
 #include <SFML/System/Time.hpp>

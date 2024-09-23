@@ -11,16 +11,20 @@
 #include "../GUI/Container.hpp"
 #include "../../EA/TSP.hpp"
 #include "../PauseableClock.hpp"
+#include "../Fragment/MainStep1.hpp"
+#include "../Fragment/MainStep2.hpp"
+#include "../Utility.hpp"
 
-	enum Step
-	{
-		Step1 = 0,
-		Step2,
-		Step3,
-		Step4,
-		Step5,
-		StepCount
-	};
+
+enum Step
+{
+	Step1 = 0,
+	Step2,
+	Step3,
+	Step4,
+	Step5,
+	StepCount
+};
 
 class StateMain : public State
 {
@@ -32,6 +36,7 @@ class StateMain : public State
 		virtual bool		handleEvent(const sf::Event& event);
 
 	private:
+		void						blinkForNextStep(sf::Time dt);
 		void 						resetTSP();
 		void 						proceedTSP();
 		void 						setVisualizer();
@@ -41,30 +46,24 @@ class StateMain : public State
     sf::Vector2f 			 windowSize;
 		Step							 step;
 
-		std::vector<std::array<float, 2>>	customCoords;
-
 		MusicPlayer* 			music;
 		SoundPlayer&			mSounds;
-
-		GUI::Container		mGUIContainer;
+		
 		PauseableClock 		stateTime;
 		sf::Time          accumulatedTime;
- 
+		 
 		// tsp
 		TSP 							tsp;
 		TSPVisualizer 		visualizer;
-		bool							evolutionFlag;
 
 		// Step
+		MainStep1           classStep1;
+		MainStep2           classStep2;
 		bool							  flagChangeStep;
+		bool							  flagBlinkBlurBox;
+		sf::Time            blinkTime;
 		sf::RectangleShape  blurryBox;
-
-
-		// step1
-		sf::Text  				           mText1;
-    std::vector<sf::CircleShape> selectedPoints;
-		sf::Vector2f                 minXY;
-		sf::Vector2f                 maxXY;
-    
+		
+		// Step1		
 };
 

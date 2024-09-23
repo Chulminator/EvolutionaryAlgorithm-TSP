@@ -11,10 +11,10 @@
 
 #include "StateStack.hpp"
 
-#include "./State/StateIdentifiers.hpp"
-#include "./State/StateLogo.hpp"
-#include "./State/StateHome.hpp"
-#include "./State/StateMain.hpp"
+#include "./States/StateIdentifiers.hpp"
+#include "./States/StateLogo.hpp"
+#include "./States/StateHome.hpp"
+#include "./States/StateMain.hpp"
 
 class Visualization : private sf::NonCopyable
 {
