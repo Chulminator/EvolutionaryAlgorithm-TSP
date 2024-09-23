@@ -24,8 +24,12 @@ class StateHome : public State
 
 
 	private:
-    sf::RenderWindow&	mWindow;
-    sf::Vector2f 			windowSize;
+		void 						resetTSP();
+		void 						proceedTSP();
+
+	private:
+    sf::RenderWindow&	 mWindow;
+    sf::Vector2f 			 windowSize;
 
 		MusicPlayer* 			music;
 		SoundPlayer&			mSounds;

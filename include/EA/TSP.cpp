@@ -11,7 +11,7 @@ TSP::TSP(int nCity_, int nChromosome_)
 , vecNewChromosome(nChromosome_, vector<int>(nCity))
 , vecDistance(nChromosome_, 0.0)
 , idxSort(nChromosome_)
-, nGeneration(1)
+, nGeneration(0)
 , evol()
 , gen(rd())
 , idxChromosome(0)
@@ -22,6 +22,8 @@ TSP::TSP(int nCity_, int nChromosome_)
   generateCity();
   generateChromosome();
   vecNewChromosome = vecChromosome;
+  CalculateFitness();    
+  sortChromosome();
 
   nPrevious      = static_cast<int>(nChromosome * 0.2); 
   nNewlyCreation = static_cast<int>(nChromosome * 0.2);
@@ -58,6 +60,8 @@ void TSP::reset(int nCity_, int nChromosome_) {
   generateCity();
   generateChromosome();
   vecNewChromosome = vecChromosome;
+  CalculateFitness();    
+  sortChromosome();
 
   nPrevious      = static_cast<int>(nChromosome * 0.2); 
   nNewlyCreation = static_cast<int>(nChromosome * 0.2);
@@ -75,7 +79,7 @@ void TSP::reset(int nCity_, int nChromosome_) {
 }
 void TSP::generateCity() {
   for (int ii = 0; ii < nCity; ii++) {
-    double theta = ii / static_cast<double>(nCity) * PI * 2.0;
+    float theta = ii / static_cast<float>(nCity) * PI * 2.0;
     // coord[ii][0] = cos(theta)*100.;
     // coord[ii][1] = sin(theta)*100.;
     coord[ii][0] = cos(theta);
@@ -91,13 +95,14 @@ void TSP::generateChromosome() {
             vecChromosome[ii][jj] = jj; 
         }
         std::shuffle(vecChromosome[ii].begin(), vecChromosome[ii].end(), engine);
+        vecNewChromosome[ii] = vecChromosome[ii];
     }
     return;
 }
 
 void TSP::CalculateFitness() {
     for (int jj = 0; jj < nChromosome; jj++) {
-        double distance = 0.0;
+        float distance = 0.0;
         for (int ii = 0; ii < nCity - 1; ii++) {
             distance += sqrt(pow(coord[vecNewChromosome[jj][ii]][0] - coord[vecNewChromosome[jj][ii + 1]][0], 2) +
                              pow(coord[vecNewChromosome[jj][ii]][1] - coord[vecNewChromosome[jj][ii + 1]][1], 2));
@@ -137,7 +142,13 @@ void TSP::initSortIndex(){
 const bool TSP::endCondition(){
   vecChromosome = vecNewChromosome;
   ++nGeneration;
-  return vecDistance[idxSort[0]] > PI * 2 * 1.05;
+  if( vecDistance[idxSort[0]] > PI * 2){
+    isOver = false;
+  }
+  else{
+    isOver = true;
+  }
+  return isOver;
 }
 
 void TSP::crossover(){
@@ -193,10 +204,10 @@ void TSP::previousChromosome(){
   
 }
 
-void TSP::solve(){
-  isOver = false;
-  do {    
-    // Evolutionary algorithm
+void TSP::solveOneStep(){
+  // Evolutionary algorithm 
+  // exit(1);
+  if( !endCondition() ){
     crossover();
     mutation();
     newChromosome();
@@ -206,23 +217,39 @@ void TSP::solve(){
     sortChromosome();
 
     printf("Generation: %d | Shortest distance: %e \n", nGeneration, vecDistance[idxSort[0]]);
-
-  }while( endCondition() );
-  isOver = true;
-  for ( int jj = 0; jj < nCity; ++jj ){        
-    printf( "%d ", vecNewChromosome[idxSort[0]][jj]);
   }
 }
+
+// void TSP::solve(){
+//   isOver = false;
+//   do {    
+//     // Evolutionary algorithm
+//     crossover();
+//     mutation();
+//     newChromosome();
+//     previousChromosome();
+
+//     CalculateFitness();    
+//     sortChromosome();
+
+//     printf("Generation: %d | Shortest distance: %e \n", nGeneration, vecDistance[idxSort[0]]);
+
+//   }while( endCondition() );
+//   isOver = true;
+//   for ( int jj = 0; jj < nCity; ++jj ){        
+//     printf( "%d ", vecNewChromosome[idxSort[0]][jj]);
+//   }
+// }
 
 const bool TSP::isAnalysisOver() const{
   return isOver;
 }
     
 const vector<int>& TSP::getBestChromosome() const{  
-  return vecNewChromosome[0];
+  return vecNewChromosome[idxSort[0]];
 }
 
-vector<array<double, 2>> TSP::getCoords() const{
+vector<array<float, 2>> TSP::getCoords() const{
   return coord;
 }
 

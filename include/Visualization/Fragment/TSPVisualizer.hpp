@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <array>
+#include <cmath>
+#include <random>
 
 using namespace std; // use a namespace
 
@@ -17,11 +19,18 @@ public:
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
     void setGeometry(const vector<int>& vecNewChromosome,
-                     const vector<array<double, 2>>& coords);
+                     const vector<array<float, 2>>& coords);
+                     
+    void setTransparency(const int transparency_);
+
+    sf::RectangleShape createLineShape(const sf::Vector2f& start, 
+                                       const sf::Vector2f& end, 
+                                       float thickness);
 
                          
 private:
+    int transparency;
     std::vector<sf::CircleShape> points;
-    sf::VertexArray lines;
+    std::vector<sf::RectangleShape> lines;
 };
 

@@ -3,7 +3,7 @@
 const sf::Time Visualization::TimePerFrame = sf::seconds(1.f/60.f);
 
 Visualization::Visualization()
-: mWindow(sf::VideoMode(800, 600), "Tetris Chulminator", sf::Style::Close)
+: mWindow(sf::VideoMode(800, 600), "Tetris Chulminator", sf::Style::Close, createContextSettings())
 , mTextures()
 , mFonts()
 , mMusic()
@@ -78,4 +78,10 @@ void Visualization::registerStates()
 {
 	mStateStack.registerState<StateLogo>(States::Logo);
 	mStateStack.registerState<StateHome>(States::Home);
+}
+
+sf::ContextSettings Visualization::createContextSettings() {
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8; // Set the level of anti-aliasing
+    return settings;
 }

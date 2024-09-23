@@ -26,6 +26,8 @@ class Visualization : private sf::NonCopyable
 		void					update(sf::Time elapsedTime);
 		void					render();
 
+		sf::ContextSettings createContextSettings();
+
 		void					registerStates();
 
 	private:
