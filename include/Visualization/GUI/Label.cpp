@@ -5,6 +5,8 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 
+#include <cmath>
+
 
 namespace GUI
 {
@@ -14,6 +16,7 @@ Label::Label(const std::string& text, const FontHolder& fonts)
 , colorAlpha(255)
 , dAlpha(20)
 {
+	mText.setFillColor(sf::Color::Black);
 }
 
 bool Label::isSelectable() const
@@ -38,7 +41,7 @@ void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
 void Label::setText(const std::string& text)
 {
-	mText.setString(text);	
+	mText.setString(text);
 	centerOrigin(mText);
 }
 
@@ -67,15 +70,25 @@ void Label::stopBlink()
 	// mText.setFillColor (sf::Color(textColor.r, textColor.g, textColor.b, 0));	
 }
 
+sf::FloatRect Label::getLocalBounds() const
+{		
+	return mText.getLocalBounds();
+}
+
 void Label::setCharacterSize(int fontSize)
 {		
 	// if (fontSize <= 0){
 	// 	assert();
 	// }
 	// else{
-		mText.setCharacterSize(fontSize);	
+	mText.setCharacterSize(fontSize);	
 	centerOrigin(mText);
 	// }
-}
+// }
 
+// void Label::setAlignment( const Align align_ ) {
+// 	align = align_;
+// }
+
+}
 }

@@ -21,6 +21,7 @@ StateMain::StateMain(StateStack& stack, Context context)
 , blurryBox(windowSize)
 , classStep1(context)
 , classStep2(context)
+, classStep3(context)
 {		
 	visualizer.setTransparency(255);
 	stateTime.reset();	
@@ -70,6 +71,9 @@ void StateMain::draw()
 	case Step2:
 		window.draw(classStep2);
 		break;	
+	case Step3:
+		window.draw(classStep3);
+		break;	
 	default:
 		window.draw(classStep1);
 		break;
@@ -93,6 +97,8 @@ bool StateMain::update(sf::Time dt)
 		break;	
 	case Step2:		
 		classStep2.update(dt);
+	case Step3:		
+		classStep3.update(dt);
 		break;	
 	default:
 		classStep1.update(dt);
@@ -111,18 +117,31 @@ bool StateMain::handleEvent(const sf::Event& event)
 		classStep1.handleEvent(event);		
 		if (event.type == sf::Event::KeyReleased){
 			if( classStep1.customCoords.size() > 2 ){
-				if (event.key.code == sf::Keyboard::Return)
+				if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Enter)
 				{
 					flagBlinkBlurBox      = true;
-					flagChangeStep = true;
+					flagChangeStep 				= true;
+					// classStep2.setCities( classStep1.customCoords,
+					// 											classStep1.minXY,
+					// 											classStep1.maxXY );
 				}
 			}
 		}
+		break;
+	case Step2:
+		classStep2.handleEvent(event);
+		if( classStep2.flagGoNext == true ){
+			flagBlinkBlurBox      = true;
+			flagChangeStep 				= true;
+		}
+		break;
+	case Step3:
+		classStep3.handleEvent(event);
+		break;
 	default:
 		classStep1.handleEvent(event);	
 		break;
 	}
-	// mGUIContainer.handleEvent(event);
 	return false;
 }
 

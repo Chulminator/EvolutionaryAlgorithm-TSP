@@ -11,10 +11,11 @@
 #include "../GUI/Container.hpp"
 #include "../../EA/TSP.hpp"
 #include "../PauseableClock.hpp"
-#include "../Fragment/MainStep1.hpp"
-#include "../Fragment/MainStep2.hpp"
 #include "../Utility.hpp"
 
+#include "../Fragment/MainStep1.hpp"
+#include "../Fragment/MainStep2.hpp"
+#include "../Fragment/MainStep3.hpp"
 
 enum Step
 {
@@ -59,6 +60,8 @@ class StateMain : public State
 		// Step
 		MainStep1           classStep1;
 		MainStep2           classStep2;
+		MainStep3           classStep3;
+
 		bool							  flagChangeStep;
 		bool							  flagBlinkBlurBox;
 		sf::Time            blinkTime;

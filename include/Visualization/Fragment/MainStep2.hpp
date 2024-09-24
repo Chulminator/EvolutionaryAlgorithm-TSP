@@ -6,11 +6,20 @@
 
 #include <vector>
 #include <array>
-#include <cmath>
-#include <random>
+#include <string>
+#include <iostream>
+#include <stack>
+#include <numeric> // std::accumulate
+#include <cmath>   // std::round
+
 
 #include "../State.hpp"
 #include "../ResourceHolder.hpp"
+#include "../GUI/Container.hpp"
+#include "../GUI/Button.hpp"
+#include "../GUI/Label.hpp"
+#include "../../EA/EvolalgorithmIdentifier.hpp"
+#include "../BlinkEntity.hpp"
 
 using namespace std; // use a namespace
 
@@ -19,20 +28,36 @@ class MainStep2: public sf::Drawable, public sf::Transformable, private sf::NonC
 public: 
     MainStep2(State::Context context);
 
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    bool		update(sf::Time dt);
-    bool		handleEvent(const sf::Event& event);
+    void    draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    bool	update(sf::Time dt);
+    bool	handleEvent(const sf::Event& event);
 
-    void setCities(std::vector<std::array<float, 2>> Coords);
+
+private:
+    void 	blinkActivated(sf::Time dt);
+    void	addButtonLabel(Evolution::Type type, float y, const std::string& text, State::Context context);
+    void    updateLabels();
+
+    bool 	checkParameters();
                 
 private:
-    sf::Vector2f 			     windowSize;
+    sf::Text                mTextStep2;
+    BlinkEntity<sf::Text>	blinkTextStep2;
 
-    sf::Text  				     mText1;
-    std::vector<std::array<float, 2>>	customCoords;
-    std::vector<sf::CircleShape> selectedPoints;
-    sf::RectangleShape           BoundaryBox;
+    sf::Vector2f 			windowSize;
+
+    sf::Text  				mText1;
+    sf::Time                mblinkTime;
+    
+    bool                    isSumCent;
+    bool                    flagGoNext;
+    
+    GUI::Container mGUIContainerButton;
+    GUI::Container mGUIContainerLabel;
+    std::array<GUI::Button::Ptr, Evolution::Type::TypeCount>	mBindingButtons;
+    std::array<GUI::Label::Ptr, Evolution::Type::TypeCount> 	mBindingLabels;
+    std::array<std::string, Evolution::Type::TypeCount>         mStringPercent;
+
 friend class StateMain;
-
 };
 

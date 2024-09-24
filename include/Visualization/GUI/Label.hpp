@@ -7,7 +7,6 @@
 
 #include <SFML/Graphics/Text.hpp>
 
-
 namespace GUI
 {
 
@@ -28,10 +27,12 @@ class Label : public Component
         void                stopBlink();
         
         void                setCharacterSize( int fontSize );
+        sf::FloatRect       getLocalBounds() const;
+
+        // void                setAlignment( const Align align_ );
 
     private:
         void				draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
 
     private:
         sf::Text  mText;
