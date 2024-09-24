@@ -121,9 +121,10 @@ bool StateMain::handleEvent(const sf::Event& event)
 				{
 					flagBlinkBlurBox      = true;
 					flagChangeStep 				= true;
-					// classStep2.setCities( classStep1.customCoords,
-					// 											classStep1.minXY,
-					// 											classStep1.maxXY );
+					classStep3.setCities( classStep1.customCoords,
+																classStep1.minXY,
+																classStep1.maxXY );
+					classStep2.setNCity ( classStep1.customCoords.size() );
 				}
 			}
 		}

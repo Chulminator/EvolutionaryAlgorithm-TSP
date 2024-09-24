@@ -32,6 +32,7 @@ public:
     bool	update(sf::Time dt);
     bool	handleEvent(const sf::Event& event);
 
+    void 	setNCity(const int nCity_);
 
 private:
     void 	blinkActivated(sf::Time dt);
@@ -41,6 +42,7 @@ private:
     bool 	checkParameters();
                 
 private:
+    int                     nCity;
     sf::Text                mTextStep2;
     BlinkEntity<sf::Text>	blinkTextStep2;
 
@@ -50,8 +52,14 @@ private:
     sf::Time                mblinkTime;
     
     bool                    isSumCent;
+    bool                    hasZero;
+    bool                    hasEnoghChromosome;
     bool                    flagGoNext;
     
+    GUI::Button::Ptr        NChromosomeButton;
+    GUI::Label::Ptr         NChromosomeLabel;
+    std::string             mStringNChromosome;
+
     GUI::Container mGUIContainerButton;
     GUI::Container mGUIContainerLabel;
     std::array<GUI::Button::Ptr, Evolution::Type::TypeCount>	mBindingButtons;

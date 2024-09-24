@@ -11,7 +11,7 @@ MainStep1::MainStep1(State::Context context)
 	mText1.setFont(context.fonts->get(Fonts::Main2));
 	mText1.setString("Step 1\n Click to select cities, then press 'Enter' when done");
 	mText1.setCharacterSize(context.window->getSize().x/25); // 글자 크기 설정 (50 포인트)
-	mText1.setPosition(windowSize.x/10, windowSize.y/10);
+	mText1.setPosition(windowSize.x/20, windowSize.y/20);
 	mText1.setFillColor(sf::Color::Black);
   
 	// step1

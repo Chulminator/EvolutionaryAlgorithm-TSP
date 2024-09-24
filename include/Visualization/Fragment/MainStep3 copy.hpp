@@ -12,7 +12,6 @@
 #include "../State.hpp"
 #include "../ResourceHolder.hpp"
 #include "../GUI/Container.hpp"
-#include "../../EA/EvolalgorithmIdentifier.hpp"
 
 using namespace std; // use a namespace
 
@@ -28,23 +27,18 @@ public:
     void setCities(const std::vector<std::array<float, 2>>& Coords,
                    const sf::Vector2f minXY,
                    const sf::Vector2f maxXY);
-                   
-    // void setCities(const std::vector<std::array<float, 2>>& Coords,
-    //                const sf::Vector2f minXY,
-    //                const sf::Vector2f maxXY);
                 
 private:
     sf::Vector2f 			     windowSize;
 
     sf::Text  				     mText1;
-    array<vector<array<float,2>>, Evolution::TypeCount> cityCoords;
-    array< vector<sf::CircleShape>, Evolution::TypeCount> cityCircles;
-    sf::RectangleShape           BoundaryBox;
-    
     std::vector<std::array<float, 2>>	customCoords;
     std::vector<sf::CircleShape> points;
-    // GUI::Container mGUIContainerButton;
-    // GUI::Container mGUIContainerLabel;
+    sf::RectangleShape           BoundaryBox;
+
+    
+    GUI::Container mGUIContainerButton;
+    GUI::Container mGUIContainerLabel;
 
 friend class StateMain;
 

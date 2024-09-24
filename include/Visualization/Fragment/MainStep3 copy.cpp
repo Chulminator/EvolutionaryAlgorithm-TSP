@@ -6,9 +6,9 @@ MainStep3::MainStep3(State::Context context)
 , BoundaryBox(sf::Vector2f(windowSize.x*2/3, windowSize.y*2/3))
 {
 	mText1.setFont(context.fonts->get(Fonts::Main2));
-	mText1.setString("Step 3\n Evolution");
+	mText1.setString("Step 2\n Set the parameters for the evolution");
 	mText1.setCharacterSize(context.window->getSize().x/25); // 글자 크기 설정 (50 포인트)
-	mText1.setPosition(windowSize.x/20, windowSize.y/20);
+	mText1.setPosition(windowSize.x/10, windowSize.y/10);
 	mText1.setFillColor(sf::Color::Black);
 
   BoundaryBox.setPosition(windowSize.x*1/20, windowSize.y*1/4 );
