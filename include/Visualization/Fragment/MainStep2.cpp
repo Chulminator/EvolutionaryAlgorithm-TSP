@@ -46,8 +46,6 @@ MainStep2::MainStep2(State::Context context)
 	addButtonLabel(Evolution::Type::Elitism,	      windowSize.y*7./12.f, "Elitism: ", context);
 	addButtonLabel(Evolution::Type::NewChromosome, 	windowSize.y*8./12.f, "New Chromosome: ", context);
 
-
-	// ;
 	mTextStep2.setFont(context.fonts->get(Fonts::Main2));
 	mTextStep2.setCharacterSize(context.window->getSize().x/25); // 글자 크기 설정 (50 포인트)
 	mTextStep2.setFillColor(sf::Color::Black); // 초기 투명도 0
@@ -153,7 +151,6 @@ bool MainStep2::handleEvent(const sf::Event& event){
 					}
 					mStringPercent[type] = input;
 				}
-    return 0;
 			}			
 			if (event.type == sf::Event::KeyReleased){
 				if (event.key.code == sf::Keyboard::Enter){			

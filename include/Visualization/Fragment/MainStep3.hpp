@@ -14,7 +14,8 @@
 #include "../State.hpp"
 #include "../ResourceHolder.hpp"
 #include "../GUI/Container.hpp"
-#include "../../EA/EvolalgorithmIdentifier.hpp"
+#include "../../EA/EAIdentifier.hpp"
+#include "../AnalysisInformation.hpp"
 #include "../PauseableClock.hpp"
 
 using namespace std; // use a namespace
@@ -38,8 +39,11 @@ private:
     void proceedTSP();
     void setLocalCities();
     void setChromosomes();
+    void setChromosomes(Evolution::Type type);
                 
 private:
+    AnalysisInfo&   analysisInfo;
+
     sf::Vector2f 			     windowSize;
     sf::RectangleShape           BoundaryBox;
     array<sf::RectangleShape, Evolution::TypeCount> BoundaryBoxEvol;
@@ -49,7 +53,9 @@ private:
     TSP 				tsp;
     array<TSPVisualizer, Evolution::TypeCount> mTypeVisualizer;
     deque<float> distanceHistory;
+    FILE        *fileHistory;
 
+    bool              flagGoNext;
     bool              isConverged;
     bool              isRunning;
     bool              flagPause;

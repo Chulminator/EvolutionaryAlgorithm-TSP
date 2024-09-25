@@ -13,7 +13,7 @@
 #include <unordered_set>
 #include "evolution.hpp"
 #include "../Visualization/Fragment/TSPVisualizer.hpp"
-#include "EvolalgorithmIdentifier.hpp"
+#include "EAIdentifier.hpp"
 
 using namespace std; // use a namespace
 
@@ -45,7 +45,7 @@ public:
 
     const array<vector<int>, Evolution::TypeCount> getBestTypeChromosome() const;
 
-    const float getBestDistance() const;
+    const std::pair<float, Evolution::Type> getBestDistance() const;
 
     const vector<float>& getDistance() const;
 

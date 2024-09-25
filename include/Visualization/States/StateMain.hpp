@@ -9,7 +9,6 @@
 #include "../MusicPlayer.hpp"
 
 #include "../GUI/Container.hpp"
-#include "../../EA/TSP.hpp"
 #include "../PauseableClock.hpp"
 #include "../Utility.hpp"
 
@@ -52,10 +51,6 @@ class StateMain : public State
 		
 		PauseableClock 		stateTime;
 		sf::Time          accumulatedTime;
-		 
-		// // tsp
-		// TSP 							tsp;
-		// TSPVisualizer 		visualizer;
 
 		// Step
 		MainStep1           classStep1;
@@ -66,6 +61,7 @@ class StateMain : public State
 		bool							  flagBlinkBlurBox;
 		sf::Time            blinkTime;
 		sf::RectangleShape  blurryBox;
+		GUI::Container		  mGUIContainer;
 		
 		// Step1		
 };

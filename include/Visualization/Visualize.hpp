@@ -8,6 +8,7 @@
 #include "MusicPlayer.hpp"
 #include "SoundPlayer.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "AnalysisInformation.hpp"
 
 #include "StateStack.hpp"
 
@@ -15,6 +16,7 @@
 #include "./States/StateLogo.hpp"
 #include "./States/StateHome.hpp"
 #include "./States/StateMain.hpp"
+#include "./States/StateResult.hpp"
 
 class Visualization : private sf::NonCopyable
 {
@@ -41,4 +43,5 @@ class Visualization : private sf::NonCopyable
 		MusicPlayer				mMusic;
 		SoundPlayer				mSounds;
 		StateStack				mStateStack;
+		AnalysisInfo      analysisInfo;
 };

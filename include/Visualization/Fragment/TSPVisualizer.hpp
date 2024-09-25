@@ -24,8 +24,12 @@ public:
     void setCities( const vector<array<float, 2>>& coords_);
                      
     void setChromosome(const vector<int>& vecChromosome);
+    
+    void setChromosome(const vector<int>& vecChromosome, const sf::Color color);
                      
     void setTransparency(const int transparency_);
+                     
+    // void setLineColor(const sf::Color color);
 
     sf::RectangleShape createLineShape(const sf::Vector2f& start, 
                                        const sf::Vector2f& end, 

@@ -25,6 +25,13 @@ StateMain::StateMain(StateStack& stack, Context context)
 
   blurryBox.setFillColor(sf::Color(255, 255, 255, 0)); // 초기 투명도 0
 
+	auto startButton = std::make_shared<GUI::Button>(context);	
+	startButton->setCallback([this] ()
+	{
+		requestStackPop();
+		requestStackPush(States::Result);
+	});	
+	mGUIContainer.pack( startButton );
 
 }
 
@@ -138,6 +145,9 @@ bool StateMain::handleEvent(const sf::Event& event)
 		break;
 	case Step3:
 		classStep3.handleEvent(event);
+		if( classStep3.flagGoNext == true ){
+			mGUIContainer.handleEvent(event);
+		}
 		break;
 	default:
 		classStep1.handleEvent(event);	

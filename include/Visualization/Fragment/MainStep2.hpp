@@ -18,7 +18,7 @@
 #include "../GUI/Container.hpp"
 #include "../GUI/Button.hpp"
 #include "../GUI/Label.hpp"
-#include "../../EA/EvolalgorithmIdentifier.hpp"
+#include "../../EA/EAIdentifier.hpp"
 #include "../BlinkEntity.hpp"
 
 using namespace std; // use a namespace

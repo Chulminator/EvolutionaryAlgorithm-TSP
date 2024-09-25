@@ -8,13 +8,18 @@ MainStep3::MainStep3(State::Context context)
 , tsp()
 , minXY(windowSize)
 , maxXY(sf::Vector2f(0,0))
+, flagGoNext(false)
 , isConverged(false)
 , isRunning(false)
 , flagPause(false)
 , accumulatedTime(sf::Time::Zero)
+, analysisInfo( *context.analysisInfo )
 // , stepTime()
 {
-  distanceHistory.resize(3000, std::numeric_limits<float>::max());
+  
+  fileHistory = fopen("./Media/History.txt", "wt");
+
+  distanceHistory.resize(2000, std::numeric_limits<float>::max());
 
 	mText1.setFont(context.fonts->get(Fonts::Main2));
 	mText1.setString("Step 3\n Evolution - Press Enter to start");
@@ -107,6 +112,7 @@ bool MainStep3::handleEvent(const sf::Event& event){
       }
     }
   }
+
   if( !isRunning && !isConverged ){	
 		if (event.type == sf::Event::KeyReleased){
       if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Enter)
@@ -117,9 +123,18 @@ bool MainStep3::handleEvent(const sf::Event& event){
 		}
   }
 
-  if (isConverged){
-
-  }
+  // if (isConverged){
+	// 	if (event.type == sf::Event::KeyReleased){
+  //     if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Enter)
+  //     {
+  //       analysisInfo.setNChromosome( nChromosome );
+  //       analysisInfo.setNCity( nCity );
+  //       analysisInfo.setNTypeEvol( nTypeEvol );  
+  //       analysisInfo.setNGeneration( tsp.getGeneration() );  
+  //       flagGoNext = true;
+  //     }
+	// 	}
+  // }
   return false;
 }
 
@@ -182,6 +197,19 @@ void MainStep3::setLocalCities(  ){
   return;
 }
 
+void MainStep3::setChromosomes(Evolution::Type type){
+	for (std::size_t ii = 0; ii < Evolution::Type::TypeCount; ++ii) {
+    
+    if( type == ii ){
+      mTypeVisualizer[ii].setChromosome( tsp.getBestTypeChromosome()[ii], sf::Color::Blue );
+    }
+    else{
+      mTypeVisualizer[ii].setChromosome( tsp.getBestTypeChromosome()[ii], sf::Color::Red );
+    }
+  }  
+}
+
+
 void MainStep3::setChromosomes(){
 	for (std::size_t ii = 0; ii < Evolution::Type::TypeCount; ++ii) {
     mTypeVisualizer[ii].setChromosome( tsp.getBestTypeChromosome()[ii] );
@@ -193,49 +221,35 @@ void MainStep3::proceedTSP(){
 	tsp.solveOneStep();
   float distancePrev = distanceHistory.front();
   distanceHistory.pop_front();
-  distanceHistory.push_back( tsp.getBestDistance() );
+  auto bestDist =  tsp.getBestDistance();
+  distanceHistory.push_back( bestDist.first );
+
+  vector<float> distance = tsp.getDistance();
+  for ( int ii = 0; ii < distance.size(); ++ii ){
+    fprintf(fileHistory, "%f ", distance[ii]);
+  }
+  fprintf(fileHistory, "\n");
+  fflush(fileHistory); 
   if( distanceHistory.back() == distancePrev ){
+    fclose(fileHistory);
+    mText1.setString("Step 3: Converged! Press 'Enter' for the next\nCurrent Generation: " + to_string(tsp.getGeneration()));
     isConverged = true;
     isRunning   = false;
+    
+    analysisInfo.setNChromosome( nChromosome );
+    analysisInfo.setNCity( nCity );
+    analysisInfo.setNTypeEvol( nTypeEvol );  
+    analysisInfo.setNGeneration( tsp.getGeneration() );  
+    flagGoNext = true;
   }
 
 // 	// printf("\tAnalysis ing\n");		
-	if( accumulatedTime >= sf::seconds(0.1f) || isConverged){
+	if( accumulatedTime >= sf::seconds(0.1f) && !isConverged){
 		accumulatedTime = sf::Time::Zero;    
+    // setChromosomes(bestDist.second);    
     setChromosomes();    
     mText1.setString("Step 3: Optimal Routes from Genetic Pools\nCurrent Generation: " + to_string(tsp.getGeneration()));
 	}
 
 }
 
-
-
-// void MainStep3::setCities(const std::vector<std::array<float, 2>>& Coords,
-//                           const sf::Vector2f minXY,
-//                           const sf::Vector2f maxXY){
-
-// }
-
-
-  
-  // float padding = BoundaryBox.getSize().x / 20; // boxSize/20
-  // sf::Vector2f adjustedMinXY = {minXY.x - padding, minXY.y - padding};
-  // sf::Vector2f adjustedMaxXY = {maxXY.x + padding, maxXY.y + padding};
-
-  // for (const auto& coord : Coords) {
-  //   std::array<float, 2> newCoord;
-  //   newCoord[0] = (coord[0] - adjustedMinXY.x) * (BoundaryBox.getSize().x / (adjustedMaxXY.x - adjustedMinXY.x));
-  //   newCoord[1] = (coord[1] - adjustedMinXY.y) * (BoundaryBox.getSize().y / (adjustedMaxXY.y - adjustedMinXY.y));
-    
-  //   // BoundaryBox의 원점에 맞춰 위치 조정
-  //   newCoord[0] += BoundaryBox.getPosition().x;
-  //   newCoord[1] += BoundaryBox.getPosition().y;
-
-  //   customCoords.push_back(newCoord);
-    
-  //   sf::CircleShape circle(5); 
-  //   circle.setPosition(sf::Vector2f(newCoord[0], newCoord[1])); // 원의 위치 설정
-  //   circle.setFillColor(sf::Color::Black); // 색상 설정
-  //   // printf("%lf %lf \n", newCoord[0], newCoord[1]);
-  //   points.push_back(circle);
-  // }

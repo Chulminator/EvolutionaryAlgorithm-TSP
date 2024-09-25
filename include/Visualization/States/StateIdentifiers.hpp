@@ -9,5 +9,6 @@ namespace States
 		Logo,
 		Home,
 		Main,
+		Result,
 	};
 }

@@ -104,6 +104,48 @@ void TSPVisualizer::setChromosome(const vector<int>& vecChromosome){
 }
 
 
+                  
+void TSPVisualizer::setChromosome(const vector<int>& vecChromosome, const sf::Color color){
+  int nCity = vecChromosome.size();
+  lines.clear(); 
+  lines.resize(nCity);
+    // // // // // // //   
+  mTextsAtPoints.clear();
+  mTextsAtPoints.resize(nCity);
+    // // // // // // //   
+  for (int ii = 0; ii < nCity; ++ii){   
+    if (ii < nCity - 1) {
+      lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+                                  sf::Vector2f( coords[vecChromosome[ii+1]][0], coords[vecChromosome[ii+1]][1]),
+                                  3.  );
+    // // // // // // // 
+      mTextsAtPoints[ii].setFont(font);
+	    mTextsAtPoints[ii].setString(to_string(ii+1));
+      mTextsAtPoints[ii].setPosition( (coords[vecChromosome[ii]][0] + coords[vecChromosome[ii+1]][0])/2,
+                                           (coords[vecChromosome[ii]][1] + coords[vecChromosome[ii+1]][1])/2  );
+      mTextsAtPoints[ii].setCharacterSize(15);
+      mTextsAtPoints[ii].setFillColor(sf::Color::Black);
+    // // // // // // // 
+    }
+    else{
+      lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+                                  sf::Vector2f( coords[vecChromosome[0]][0], coords[vecChromosome[0]][1]),
+                                  3.  );
+    // // // // // // // 
+      mTextsAtPoints[ii].setFont( font );
+	    mTextsAtPoints[ii].setString(to_string(ii+1));
+      mTextsAtPoints[ii].setPosition( (coords[vecChromosome[ii]][0] + coords[vecChromosome[0]][0])/2,
+                                           (coords[vecChromosome[ii]][1] + coords[vecChromosome[0]][1])/2  );
+      mTextsAtPoints[ii].setCharacterSize(15);
+      mTextsAtPoints[ii].setFillColor(sf::Color::Black);
+    // // // // // // // 
+    }
+    lines[ii].setFillColor(color);
+  }
+  return;
+}
+
+
 void TSPVisualizer::draw(sf::RenderTarget& target, sf::RenderStates states) const{
   
   states.transform *= getTransform();
@@ -156,3 +198,4 @@ void TSPVisualizer::setTransparency(const int transparency_){
     transparency = transparency_;
   }
 }
+

@@ -10,11 +10,13 @@ Visualization::Visualization()
 , mFonts()
 , mMusic()
 , mSounds()
+, analysisInfo()
 , mStateStack(State::Context(mWindow, 
 														mTextures,
 														mFonts, 
 														mMusic, 
-														mSounds))
+														mSounds,
+														analysisInfo))
 {
 	mWindow.setKeyRepeatEnabled(false);
 	mWindow.setVerticalSyncEnabled(true);
@@ -81,6 +83,7 @@ void Visualization::registerStates()
 	mStateStack.registerState<StateLogo>(States::Logo);
 	mStateStack.registerState<StateHome>(States::Home);
 	mStateStack.registerState<StateMain>(States::Main);
+	mStateStack.registerState<StateResult>(States::Result);
 }
 
 sf::ContextSettings Visualization::createContextSettings() {

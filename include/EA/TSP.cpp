@@ -383,8 +383,19 @@ const array<vector<int>, Evolution::TypeCount> TSP::getBestTypeChromosome() cons
   return result;
 }
 
-const float TSP::getBestDistance() const{
-  return vecDistance[idxSort[0]];
+const std::pair<float, Evolution::Type> TSP::getBestDistance() const{  
+  if( idxSort[0] < nPrevious){
+    return make_pair(vecDistance[idxSort[0]], Evolution::Elitism);
+  }
+  else if( idxSort[0] < nPrevious + nCrossover){
+    return make_pair(vecDistance[idxSort[0]], Evolution::Crossover);
+  }
+  else if( idxSort[0] < nPrevious + nCrossover + nMutation){
+    return make_pair(vecDistance[idxSort[0]], Evolution::Mutation);
+  }
+  else {
+    return make_pair(vecDistance[idxSort[0]], Evolution::NewChromosome);
+  }
 }
 
 const vector<float>& TSP::getDistance() const{
