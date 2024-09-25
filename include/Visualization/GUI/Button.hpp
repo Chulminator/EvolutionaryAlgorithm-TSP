@@ -58,6 +58,8 @@ class Button : public Component
         void setTextPosition(const sf::Vector2f &position);
         void setTextPosition(float x, float y);
 
+        void setTextOrigin(float x, float y);
+
 
     private:
         virtual void			draw(sf::RenderTarget& target, sf::RenderStates states) const;
@@ -72,6 +74,7 @@ class Button : public Component
         bool					mIsToggle;
 		SoundPlayer&			mSounds;
 		bool        			mIsSelectable;
+        sf::RenderWindow&	    mWindow;
 };
 
 }

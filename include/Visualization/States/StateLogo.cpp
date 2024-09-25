@@ -19,7 +19,7 @@ StateLogo::StateLogo(StateStack& stack, Context context)
 	sf::FloatRect spriteBounds = mSpriteLogo.getLocalBounds();
 	sf::Vector2f  windowSize  = static_cast<sf::Vector2f>(context.window->getSize());
 	mSpriteLogo.setOrigin(spriteBounds.left + spriteBounds.width / 2.0f, spriteBounds.top + spriteBounds.height / 2.0f);
-	mSpriteLogo.setPosition(windowSize.x/2., windowSize.y/2.-50.);
+	mSpriteLogo.setPosition(windowSize.x/2., windowSize.y/2.-windowSize.y/16);
 
 	brightness.setSize(windowSize);
 	brightness.setFillColor(sf::Color(0,0,0,mTransparency)); 

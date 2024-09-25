@@ -2,7 +2,7 @@
 #define BOOK_STATESTACK_HPP
 
 #include "State.hpp"
-#include "./State/StateIdentifiers.hpp"
+#include "./States/StateIdentifiers.hpp"
 #include "ResourceIdentifiers.hpp"
 
 #include <SFML/System/NonCopyable.hpp>
