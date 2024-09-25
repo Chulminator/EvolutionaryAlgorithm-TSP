@@ -117,7 +117,7 @@ void StateHome::resetTSP(){
 void StateHome::proceedTSP(){
 	tsp.solveOneStep();
 	// printf("\tAnalysis ing\n");		
-	if( accumulatedTime >= sf::seconds(0.1f) || tsp.isAnalysisOver()){
+	if( accumulatedTime >= sf::seconds(0.1f) || tsp.isAnalysisOver()){ // 여기 확인
 		accumulatedTime = sf::Time::Zero;
 		setVisualizer();
 		// printf("\tScreen update\n");
@@ -135,6 +135,8 @@ void StateHome::setVisualizer(){
 			element[0] *= windowSize.x/4;
 			element[1] *= windowSize.x/4;
 	}
-	visualizer.setGeometry(tsp.getBestChromosome(), coords);
+	// visualizer.setGeometry(tsp.getBestChromosome(), coords);
+	visualizer.setCities( coords );
+	visualizer.setChromosome(tsp.getBestChromosome());
 	visualizer.setPosition(windowSize.x/2, windowSize.y/2);
 }

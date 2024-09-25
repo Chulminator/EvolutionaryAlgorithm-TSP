@@ -53,9 +53,9 @@ class StateMain : public State
 		PauseableClock 		stateTime;
 		sf::Time          accumulatedTime;
 		 
-		// tsp
-		TSP 							tsp;
-		TSPVisualizer 		visualizer;
+		// // tsp
+		// TSP 							tsp;
+		// TSPVisualizer 		visualizer;
 
 		// Step
 		MainStep1           classStep1;

@@ -12,8 +12,6 @@ StateMain::StateMain(StateStack& stack, Context context)
 , music(context.music)
 , mSounds(*context.sounds)
 , stateTime()
-, visualizer( )
-, tsp(10, 100)
 , accumulatedTime(sf::Time::Zero)
 , blinkTime(sf::Time::Zero)
 , flagBlinkBlurBox(false)
@@ -23,7 +21,6 @@ StateMain::StateMain(StateStack& stack, Context context)
 , classStep2(context)
 , classStep3(context)
 {		
-	visualizer.setTransparency(255);
 	stateTime.reset();	
 
   blurryBox.setFillColor(sf::Color(255, 255, 255, 0)); // 초기 투명도 0
@@ -97,6 +94,7 @@ bool StateMain::update(sf::Time dt)
 		break;	
 	case Step2:		
 		classStep2.update(dt);
+		break;
 	case Step3:		
 		classStep3.update(dt);
 		break;	
@@ -121,9 +119,6 @@ bool StateMain::handleEvent(const sf::Event& event)
 				{
 					flagBlinkBlurBox      = true;
 					flagChangeStep 				= true;
-					classStep3.setCities( classStep1.customCoords,
-																classStep1.minXY,
-																classStep1.maxXY );
 					classStep2.setNCity ( classStep1.customCoords.size() );
 				}
 			}
@@ -134,6 +129,11 @@ bool StateMain::handleEvent(const sf::Event& event)
 		if( classStep2.flagGoNext == true ){
 			flagBlinkBlurBox      = true;
 			flagChangeStep 				= true;
+			classStep3.setParameters( classStep2.mStringNChromosome,
+															  classStep2.mStringPercent,
+																classStep1.customCoords,
+																classStep1.minXY,
+																classStep1.maxXY);
 		}
 		break;
 	case Step3:
@@ -145,33 +145,3 @@ bool StateMain::handleEvent(const sf::Event& event)
 	}
 	return false;
 }
-
-// void StateMain::resetTSP(){
-// 	// printf("Reset========================\n");
-// 	accumulatedTime = sf::Time::Zero;
-// 	stateTime.reset();			
-// 	tsp.reset(10, 10*10);
-// 	setVisualizer();
-// }
-
-// void StateMain::proceedTSP(){
-// 	tsp.solveOneStep();
-// 	if( accumulatedTime >= sf::seconds(0.1f) || tsp.isAnalysisOver()){
-// 		accumulatedTime = sf::Time::Zero;
-// 		setVisualizer();
-// 	}
-
-// 	if( tsp.isAnalysisOver() ){
-// 		accumulatedTime = sf::Time::Zero;
-// 	}	
-// }
-
-// void StateMain::setVisualizer(){
-// 	vector<array<float, 2>> coords = tsp.getCoords();
-// 	for (auto& element : coords) {
-// 			element[0] *= windowSize.x/4;
-// 			element[1] *= windowSize.x/4;
-// 	}
-// 	visualizer.setGeometry(tsp.getBestChromosome(), coords);
-// 	visualizer.setPosition(windowSize.x/2, windowSize.y/2);
-// }

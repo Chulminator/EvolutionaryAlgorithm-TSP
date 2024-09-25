@@ -206,7 +206,7 @@ bool MainStep2::checkParameters(){
 		hasEnoghChromosome = false;
 		return false;
 	}
-	else if( std::stoi(mStringNChromosome) <= 4 ){
+	else if( std::stoi(mStringNChromosome) < 4 ){
 		mStringNChromosome = "";
 		hasEnoghChromosome = false;
 		return false;

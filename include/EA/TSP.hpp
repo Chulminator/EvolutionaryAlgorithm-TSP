@@ -13,17 +13,25 @@
 #include <unordered_set>
 #include "evolution.hpp"
 #include "../Visualization/Fragment/TSPVisualizer.hpp"
+#include "EvolalgorithmIdentifier.hpp"
 
 using namespace std; // use a namespace
 
 
 class TSP {
 public: 
-    TSP(int nCity_, int nChromosome_);
+    TSP();
+    TSP(const int nCity_, const int nChromosome_);
 
-    void reset(int nCity_, int nChromosome_);
+    void reset(const int& nCity_, const int& nChromosome_);
+
+    void reset(const int nCity_, const int nChromosome_, 
+                const vector<array<float, 2>>& coord_,
+                const array<int, Evolution::TypeCount>& nTypeEvol);
 
     void generateCity();
+
+    void generateCity(vector<array<float, 2>> coord_);
 
     void generateChromosome(); 
     
@@ -35,17 +43,24 @@ public:
 
     const vector<int>& getBestChromosome() const;
 
+    const array<vector<int>, Evolution::TypeCount> getBestTypeChromosome() const;
+
+    const float getBestDistance() const;
+
+    const vector<float>& getDistance() const;
+
     // const vector<array<float, 2>>& getCoords() const;
     vector<array<float, 2>> getCoords() const;
+    
+    const int getGeneration() const;
 private:
+    const bool isAlreadyInPool( );
 
     void CalculateFitness();
     
     int randomSelect(int num);
     
     void sortChromosome();
-    
-    const int getGeneration() const;
 
     void initSortIndex();
 
@@ -63,10 +78,13 @@ private:
     int nChromosome;
 
     // Chromosome
-    int nPrevious;
-    int nNewlyCreation;
     int nCrossover;
     int nMutation;
+    int nNewlyCreation;
+    int nPrevious;
+
+    // Chromosome
+    float goal;
 
     // The number of parents pool to be selected
     int nParent;
