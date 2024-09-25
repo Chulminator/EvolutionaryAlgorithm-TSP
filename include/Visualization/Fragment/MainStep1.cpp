@@ -18,7 +18,7 @@ MainStep1::MainStep1(State::Context context)
 	// sf::Text mTextStep1;
 	mTextStep1.setFont(context.fonts->get(Fonts::Main2));
 	mTextStep1.setCharacterSize(context.window->getSize().x/25); // 글자 크기 설정 (50 포인트)
-	mTextStep1.setString("Click more than two cities");
+	mTextStep1.setString("Click more than five cities");
   mTextStep1.setOrigin(mTextStep1.getLocalBounds().width / 2, 
 											 mTextStep1.getLocalBounds().height / 2);
 	mTextStep1.setPosition(windowSize.x/2, windowSize.y/2);

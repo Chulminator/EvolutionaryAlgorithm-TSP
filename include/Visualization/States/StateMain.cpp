@@ -121,7 +121,7 @@ bool StateMain::handleEvent(const sf::Event& event)
 	case Step1:
 		classStep1.handleEvent(event);		
 		if (event.type == sf::Event::KeyReleased){
-			if( classStep1.customCoords.size() > 2 ){
+			if( classStep1.customCoords.size() > 4 ){
 				if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Enter)
 				{
 					flagBlinkBlurBox      = true;

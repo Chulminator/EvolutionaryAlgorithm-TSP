@@ -64,7 +64,7 @@ MainStep2::MainStep2(State::Context context)
 			else{
 				if ( !hasEnoghChromosome ){
 					// printf("nCity*nCity: %d\n", nCity*nCity);
-					std::string str = "Not enough number of chromosomes (recommended: " + std::to_string(nCity * nCity) + ")";
+					std::string str = "Not enough number of chromosomes (recommended: 40 - 100)";
 					mTextStep2.setString(str);
 					// mTextStep2.setString("Set enough number of chromosomes");
 					mTextStep2.setOrigin(mTextStep2.getLocalBounds().width / 2, 

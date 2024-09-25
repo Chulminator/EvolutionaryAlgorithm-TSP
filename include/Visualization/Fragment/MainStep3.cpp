@@ -19,7 +19,7 @@ MainStep3::MainStep3(State::Context context)
   
   fileHistory = fopen("./Media/History.txt", "wt");
 
-  distanceHistory.resize(2000, std::numeric_limits<float>::max());
+  distanceHistory.resize(1000, std::numeric_limits<float>::max());
 
 	mText1.setFont(context.fonts->get(Fonts::Main2));
 	mText1.setString("Step 3\n Evolution - Press Enter to start");
