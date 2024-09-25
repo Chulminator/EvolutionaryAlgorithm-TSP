@@ -22,6 +22,13 @@ MainStep3::MainStep3(State::Context context)
 	mText1.setPosition(windowSize.x/20, windowSize.y/20);
 	mText1.setFillColor(sf::Color::Black);
 
+  
+  mTextRemark.setFont(context.fonts->get(Fonts::Main2));
+	mTextRemark.setString("* # indicates the number of chromosomes\t\t** Press 'p' to pause");
+	mTextRemark.setCharacterSize(context.window->getSize().x/60); 
+	mTextRemark.setPosition(windowSize.x*1/20, windowSize.y*19/20);
+	mTextRemark.setFillColor(sf::Color::White);
+
   BoundaryBox.setPosition(windowSize.x*1/20, windowSize.y*1/5 );
   BoundaryBox.setFillColor(sf::Color(200, 200, 200, 50 )); // 색상 설정
   
@@ -69,6 +76,7 @@ void MainStep3::draw(sf::RenderTarget& target, sf::RenderStates states) const{
 	for (std::size_t ii = 0; ii < Evolution::Type::TypeCount; ++ii) {
     target.draw(mTypeVisualizer[ii], states);    
   }
+    target.draw(mTextRemark, states);
   return;
 }
 
@@ -104,7 +112,7 @@ bool MainStep3::handleEvent(const sf::Event& event){
       if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Enter)
       {
         isRunning = true;
-	      mText1.setString("Step 3\n Evolution");
+	      mTextRemark.setFillColor(sf::Color::Black);
       }
 		}
   }
@@ -139,10 +147,10 @@ void MainStep3::setParameters(const string mStringNChromosome,
   }
   nTypeEvol[0] += nChromosome - finalSum;  
   // string str = "Crossover - "+  to_string(nTypeEvol[Evolution::Crossover]);
-  mTextEvol[Evolution::Crossover].setString("Crossover - "+  to_string(nTypeEvol[Evolution::Crossover]));
-  mTextEvol[Evolution::Mutation].setString("Mutation - "+ to_string(nTypeEvol[Evolution::Mutation]));
-  mTextEvol[Evolution::Elitism].setString("Elitism - "+ to_string(nTypeEvol[Evolution::Elitism]));
-  mTextEvol[Evolution::NewChromosome].setString("New Chromosome - "+ to_string(nTypeEvol[Evolution::NewChromosome]));
+  mTextEvol[Evolution::Crossover].setString("Crossover - #:"+  to_string(nTypeEvol[Evolution::Crossover]));
+  mTextEvol[Evolution::Mutation].setString("Mutation - #:"+ to_string(nTypeEvol[Evolution::Mutation]));
+  mTextEvol[Evolution::Elitism].setString("Elitism - #:"+ to_string(nTypeEvol[Evolution::Elitism]));
+  mTextEvol[Evolution::NewChromosome].setString("New Chromosome - #:"+ to_string(nTypeEvol[Evolution::NewChromosome]));
 
   tsp.reset( nCity, nChromosome, orgCoords, nTypeEvol);
   setLocalCities();
@@ -186,15 +194,16 @@ void MainStep3::proceedTSP(){
   float distancePrev = distanceHistory.front();
   distanceHistory.pop_front();
   distanceHistory.push_back( tsp.getBestDistance() );
-  if( pop_distanceHistory.back() == distancePrev ){
+  if( distanceHistory.back() == distancePrev ){
     isConverged = true;
+    isRunning   = false;
   }
 
 // 	// printf("\tAnalysis ing\n");		
-	if( accumulatedTime >= sf::seconds(0.1f)){
+	if( accumulatedTime >= sf::seconds(0.1f) || isConverged){
 		accumulatedTime = sf::Time::Zero;    
     setChromosomes();    
-    mText1.setString("Step 3\n Best route out of each genetic pool - Generation: "+to_string(tsp.getGeneration()) );
+    mText1.setString("Step 3: Optimal Routes from Genetic Pools\nCurrent Generation: " + to_string(tsp.getGeneration()));
 	}
 
 }

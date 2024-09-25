@@ -62,6 +62,7 @@ private:
     array<int, Evolution::TypeCount> nTypeEvol;
 
     sf::Text  				     mText1;
+    sf::Text  				     mTextRemark;
     array<vector<array<float,2>>, Evolution::TypeCount> cityCoords;
     array< vector<sf::CircleShape>, Evolution::TypeCount> cityCircles;
     
