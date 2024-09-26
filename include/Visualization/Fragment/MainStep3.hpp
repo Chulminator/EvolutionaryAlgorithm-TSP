@@ -17,6 +17,7 @@
 #include "../../EA/EAIdentifier.hpp"
 #include "../AnalysisInformation.hpp"
 #include "../PauseableClock.hpp"
+#include "../MusicPlayer.hpp"
 
 using namespace std; // use a namespace
 
@@ -42,6 +43,7 @@ private:
     void setChromosomes(Evolution::Type type);
                 
 private:
+    MusicPlayer* music;
     AnalysisInfo&   analysisInfo;
 
     sf::Vector2f 			     windowSize;

@@ -13,6 +13,7 @@
 #include <cmath>   // std::round
 
 
+#include "../SoundPlayer.hpp"
 #include "../State.hpp"
 #include "../ResourceHolder.hpp"
 #include "../GUI/Container.hpp"
@@ -42,6 +43,8 @@ private:
     bool 	checkParameters();
                 
 private:
+    SoundPlayer&			mSounds;
+
     int                     nCity;
     sf::Text                mTextStep2;
     BlinkEntity<sf::Text>	blinkTextStep2;

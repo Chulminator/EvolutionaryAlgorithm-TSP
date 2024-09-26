@@ -16,14 +16,10 @@ SoundPlayer::SoundPlayer()
 : mSoundBuffers()
 , mSounds()
 {
-	mSoundBuffers.load(SoundEffect::LineClear,	"Media/Sound/LineClear.wav");
-	mSoundBuffers.load(SoundEffect::Drop,			"Media/Sound/Drop.wav");
 	mSoundBuffers.load(SoundEffect::Button,			"Media/Sound/Button.wav");
 	mSoundBuffers.load(SoundEffect::Click,			"Media/Sound/Click.wav");
-	mSoundBuffers.load(SoundEffect::BlockFlying1,	"Media/Sound/BlockFlying1.wav");
-	mSoundBuffers.load(SoundEffect::BlockFlying2,	"Media/Sound/BlockFlying2.wav");
-	mSoundBuffers.load(SoundEffect::BlockFlying3,	"Media/Sound/BlockFlying3.wav");
-	mSoundBuffers.load(SoundEffect::BlockFlying4,	"Media/Sound/BlockFlying4.wav");
+	mSoundBuffers.load(SoundEffect::Cymbal1,			"Media/Sound/CrashCymbal.wav");
+	mSoundBuffers.load(SoundEffect::Cymbal2,			"Media/Sound/RideCymbal.wav");
 
 	// Listener points towards the screen (default in SFML)
 	sf::Listener::setDirection(0.f, 0.f, -1.f);

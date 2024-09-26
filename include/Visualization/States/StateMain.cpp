@@ -21,6 +21,9 @@ StateMain::StateMain(StateStack& stack, Context context)
 , classStep2(context)
 , classStep3(context)
 {		
+	music->play( Music::MainStep1 );
+	music->setLoop(false);
+
 	stateTime.reset();	
 
   blurryBox.setFillColor(sf::Color(255, 255, 255, 0)); // 초기 투명도 0
@@ -28,6 +31,7 @@ StateMain::StateMain(StateStack& stack, Context context)
 	auto startButton = std::make_shared<GUI::Button>(context);	
 	startButton->setCallback([this] ()
 	{
+		music->stop();
 		requestStackPop();
 		requestStackPush(States::Result);
 	});	
@@ -141,6 +145,8 @@ bool StateMain::handleEvent(const sf::Event& event)
 																classStep1.customCoords,
 																classStep1.minXY,
 																classStep1.maxXY);
+																
+			music->stop();
 		}
 		break;
 	case Step3:

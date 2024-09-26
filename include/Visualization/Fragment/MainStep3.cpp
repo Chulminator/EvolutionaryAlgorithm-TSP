@@ -14,9 +14,9 @@ MainStep3::MainStep3(State::Context context)
 , flagPause(false)
 , accumulatedTime(sf::Time::Zero)
 , analysisInfo( *context.analysisInfo )
+, music(context.music)
 // , stepTime()
-{
-  
+{  
   fileHistory = fopen("./Media/History.txt", "wt");
 
   distanceHistory.resize(1000, std::numeric_limits<float>::max());
@@ -105,9 +105,11 @@ bool MainStep3::handleEvent(const sf::Event& event){
       {
         if( flagPause ){
           flagPause = false;
+          music->setPaused(false);
         }
         else{
           flagPause = true;
+          music->setPaused(true);
         }
       }
     }
@@ -117,6 +119,8 @@ bool MainStep3::handleEvent(const sf::Event& event){
 		if (event.type == sf::Event::KeyReleased){
       if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Enter)
       {
+  			music->play( Music::MainStep3 );
+        music->setLoop(false);
         isRunning = true;
 	      mTextRemark.setFillColor(sf::Color::Black);
       }

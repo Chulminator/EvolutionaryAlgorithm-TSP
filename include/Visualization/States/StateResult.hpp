@@ -49,6 +49,10 @@ class StateResult : public State
 		sf::Text    mTextYLabel;
 		sf::Text    mTextXLabel;
 		
+		array<sf::Text, Evolution::TypeCount>        mTextLegend;
+		array<sf::CircleShape, Evolution::TypeCount> mCircleLegend;
+		    
+		
 
 		MusicPlayer* music;
 };

@@ -5,8 +5,11 @@ MainStep1::MainStep1(State::Context context)
 : windowSize(static_cast<sf::Vector2f>(context.window->getSize()))
 , minXY(windowSize)
 , maxXY(sf::Vector2f(0,0))
+, mSounds(*context.sounds)
 , blinkTextStep1()
 {
+	mSounds.removeStoppedSounds();    
+	mSounds.setVolume( 100 );
 
 	mText1.setFont(context.fonts->get(Fonts::Main2));
 	mText1.setString("Step 1\n Click to select cities, then press 'Enter' when done");
@@ -35,6 +38,7 @@ bool MainStep1::handleEvent(const sf::Event& event){
   
   if (event.type == sf::Event::MouseButtonPressed) {
     if (event.mouseButton.button == sf::Mouse::Left) {
+      mSounds.play( SoundEffect::Cymbal1 );
       std::array<float, 2> coord;
       coord[0] = static_cast<float>( event.mouseButton.x );
       coord[1] = static_cast<float>( event.mouseButton.y );
@@ -59,7 +63,7 @@ bool MainStep1::handleEvent(const sf::Event& event){
   }
 
   
-  if( customCoords.size() <= 2 ){
+  if( customCoords.size() <= 4 ){
     if (event.key.code == sf::Keyboard::Space || event.key.code == sf::Keyboard::Enter)
     {
       blinkTextStep1.startBlink();

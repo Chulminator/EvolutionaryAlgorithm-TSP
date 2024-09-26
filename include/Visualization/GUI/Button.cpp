@@ -21,6 +21,7 @@ Button::Button(State::Context context)
 , mSounds(*context.sounds)
 , mIsSelectable(true)
 {
+	mSounds.setVolume( 100 );
 	changeTexture(Normal);
 	// sf::FloatRect bounds = mBox.getLocalBounds();
 	mBox.setFillColor(sf::Color(0,0,0,0));
@@ -94,13 +95,13 @@ void Button::activate()
 
     // If we are toggle then we should show that the button is pressed and thus "toggled".
 	if (mIsToggle){
-		mSounds.play(SoundEffect::Click);
+		mSounds.play(SoundEffect::Cymbal1);
 		changeTexture(Pressed);
 	}
 
 	if (mCallback){
 		// mSounds.play(SoundEffect::Combo2);
-		mSounds.play(SoundEffect::Button);
+		mSounds.play(SoundEffect::Cymbal2);
 		mCallback();
 	}
 

@@ -48,10 +48,10 @@ bool BlinkEntity<Entity>::update(sf::Time dt){
 		float alpha = 0;
 		if (blinkTime < sf::seconds(0.3f)) {
 			alpha = 255. * (blinkTime.asSeconds() / 0.3f);
-		} else if (blinkTime < sf::seconds(1.0f)) {
-			alpha = 255.;
 		} else if (blinkTime < sf::seconds(1.3f)) {
-			alpha = 255 * (1 - (blinkTime.asSeconds() - 1.0f) / 0.3f);
+			alpha = 255.;
+		} else if (blinkTime < sf::seconds(1.6f)) {
+			alpha = 255 * (1 - (blinkTime.asSeconds() - 1.3f) / 0.3f);
 		} else {
 			flagBlink = false; 
 			blinkTime = sf::Time::Zero;

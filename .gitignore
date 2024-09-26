@@ -1,0 +1,18 @@
+# Created by https://www.toptal.com/developers/gitignore/api/c++
+# Edit at https://www.toptal.com/developers/gitignore?templates=c++
+
+### C++ ###
+
+# Compiled Object files
+*.o
+*.obj
+
+# Executables
+*.exe
+*.out
+*.app
+
+# saveFile
+*.txt
+
+# End of https://www.toptal.com/developers/gitignore/api/c++

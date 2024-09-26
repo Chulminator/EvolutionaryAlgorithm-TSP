@@ -3,8 +3,6 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics.hpp>
 
-// #include "CommandQueue.hpp"
-
 #include "MusicPlayer.hpp"
 #include "SoundPlayer.hpp"
 #include "ResourceIdentifiers.hpp"

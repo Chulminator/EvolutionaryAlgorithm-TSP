@@ -17,6 +17,7 @@ StateHome::StateHome(StateStack& stack, Context context)
 , evolutionFlag( true )
 , accumulatedTime(sf::Time::Zero)
 {		
+	music->play( Music::Home );
 	visualizer.setTransparency(80);
 	stateTime.reset();	
 
@@ -32,6 +33,8 @@ StateHome::StateHome(StateStack& stack, Context context)
 	startButton->setPosition(windowSizeX*0.5, windowSizeY*0.5-spriteBounds.height/2);
 	startButton->setCallback([this] ()
 	{
+		
+		music->stop();
 		requestStackPop();
 		requestStackPush(States::Main);
 	});

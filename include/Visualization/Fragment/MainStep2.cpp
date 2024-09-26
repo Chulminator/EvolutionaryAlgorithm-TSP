@@ -10,7 +10,11 @@ MainStep2::MainStep2(State::Context context)
 , hasEnoghChromosome(false)
 , blinkTextStep2()
 , nCity(0) 
+, mSounds(*context.sounds)
 {
+	mSounds.removeStoppedSounds();    
+	mSounds.setVolume( 100 );
+
 	mText1.setFont(context.fonts->get(Fonts::Main2));
 	mText1.setString("Step 2\n Set the parameters for the evolution");
 	mText1.setCharacterSize(context.window->getSize().x/25); // 글자 크기 설정 (50 포인트)
@@ -64,7 +68,7 @@ MainStep2::MainStep2(State::Context context)
 			else{
 				if ( !hasEnoghChromosome ){
 					// printf("nCity*nCity: %d\n", nCity*nCity);
-					std::string str = "Not enough number of chromosomes (recommended: 40 - 100)";
+					std::string str = "Insufficient chromosomes (40-100 recommended)";
 					mTextStep2.setString(str);
 					// mTextStep2.setString("Set enough number of chromosomes");
 					mTextStep2.setOrigin(mTextStep2.getLocalBounds().width / 2, 

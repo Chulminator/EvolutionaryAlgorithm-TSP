@@ -9,6 +9,10 @@ StateResult::StateResult(StateStack& stack, Context context)
 , windowSize( static_cast<sf::Vector2f>(context.window->getSize()) )
 , music(context.music)
 {	
+
+	music->play( Music::Result );
+  music->setLoop(false);
+
 	mText1.setFont(context.fonts->get(Fonts::Main2));
 	mText1.setString("Result - Press 'r' to restart");
 	mText1.setCharacterSize(windowSize.x/30); // 글자 크기 설정 (50 포인트)
@@ -84,7 +88,7 @@ StateResult::StateResult(StateStack& stack, Context context)
 	sf::Vector2f 	xAxisMin  = {windowSize.x*1/20, windowSize.y*17/20  }; 
 	sf::Vector2f 	yAxisMin  = {windowSize.x*2/20,  windowSize.y*18/20  };
 
-	minDistance *= 0.5f;
+	// minDistance *= 0.5f;
 	// maxDistance *= 1.1f;
 	// maxDistance *= 1.1f;
 
@@ -101,7 +105,7 @@ StateResult::StateResult(StateStack& stack, Context context)
 
 	for (int ii = 1; ii < nGen; ++ii) {
 
-		float xOffset = origin.x + ii * ((windowSize.x*15./20.)/static_cast<float>( nGen ));
+		float xOffset = origin.x + static_cast<float>(ii) * ((windowSize.x*15./20.)/static_cast<float>( nGen ));
 		
 		// // Normalizing ii to a logarithmic scale between 1 and nGen
 		// float logMin = log(1)+ 1;            // log(1) is 0, so this is our starting point
@@ -118,23 +122,23 @@ StateResult::StateResult(StateStack& stack, Context context)
 
 		// 각 진화 유형의 최소 및 최대 원 그리기
 		// New Chromosome
-		float minYNewChromosome = origin.y - (vecMinMax[ii][Evolution::NewChromosome].first - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
-		float maxYNewChromosome = origin.y - (vecMinMax[ii][Evolution::NewChromosome].second - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
+		float minYNewChromosome = origin.y - (vecMinMax[ii][Evolution::NewChromosome].first - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
+		float maxYNewChromosome = origin.y - (vecMinMax[ii][Evolution::NewChromosome].second - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
 		sf::CircleShape circleMinNewChromosome(2);
 		circleMinNewChromosome.setPosition(xOffset, minYNewChromosome);
-		circleMinNewChromosome.setFillColor(sf::Color::Green);
+		circleMinNewChromosome.setFillColor(sf::Color::Magenta);
 		circles.push_back(circleMinNewChromosome);
 
 		sf::CircleShape circleMaxNewChromosome(2);
 		circleMaxNewChromosome.setPosition(xOffset, maxYNewChromosome);
-    circleMaxNewChromosome.setOutlineColor(sf::Color::Green);
+    circleMaxNewChromosome.setOutlineColor(sf::Color::Magenta);
     circleMaxNewChromosome.setOutlineThickness(1); 
     circleMaxNewChromosome.setFillColor(sf::Color::Transparent);
 		circles.push_back(circleMaxNewChromosome);
 
 		// Mutation
-		float minYMutation = origin.y - (vecMinMax[ii][Evolution::Mutation].first - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
-		float maxYMutation = origin.y - (vecMinMax[ii][Evolution::Mutation].second - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
+		float minYMutation = origin.y - (vecMinMax[ii][Evolution::Mutation].first - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
+		float maxYMutation = origin.y - (vecMinMax[ii][Evolution::Mutation].second - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
 		sf::CircleShape circleMinMutation(2);
 		circleMinMutation.setPosition(xOffset, minYMutation);
 		circleMinMutation.setFillColor(sf::Color::Blue);
@@ -148,8 +152,8 @@ StateResult::StateResult(StateStack& stack, Context context)
 		circles.push_back(circleMaxMutation);
 
 		// Crossover
-		float minYCrossover = origin.y - (vecMinMax[ii][Evolution::Crossover].first - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
-		float maxYCrossover = origin.y - (vecMinMax[ii][Evolution::Crossover].second - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
+		float minYCrossover = origin.y - (vecMinMax[ii][Evolution::Crossover].first - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
+		float maxYCrossover = origin.y - (vecMinMax[ii][Evolution::Crossover].second - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
 		sf::CircleShape circleMinCrossover(2);
 		circleMinCrossover.setPosition(xOffset, minYCrossover);
 		circleMinCrossover.setFillColor(sf::Color::Red);
@@ -163,20 +167,59 @@ StateResult::StateResult(StateStack& stack, Context context)
 		circles.push_back(circleMaxCrossover);
 		
 		// Elitism
-		float minYElitism = origin.y - (vecMinMax[ii][Evolution::Elitism].first - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
-		float maxYElitism = origin.y - (vecMinMax[ii][Evolution::Elitism].second - maxDistance)/(minDistance-maxDistance)*(3./4.*windowSize.y);
+		float minYElitism = origin.y - (vecMinMax[ii][Evolution::Elitism].first - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
+		float maxYElitism = origin.y - (vecMinMax[ii][Evolution::Elitism].second - maxDistance)/(minDistance-maxDistance)*(3./5.*windowSize.y);
 		sf::CircleShape circleMinElitism(2);
 		circleMinElitism.setPosition(xOffset, minYElitism);
-		circleMinElitism.setFillColor(sf::Color::Magenta);
+		circleMinElitism.setFillColor(sf::Color::Green);
 		circles.push_back(circleMinElitism);
 		
 		sf::CircleShape circleMaxElitism(2);
 		circleMaxElitism.setPosition(xOffset, maxYElitism);
-    circleMaxElitism.setOutlineColor(sf::Color::Magenta);
+    circleMaxElitism.setOutlineColor(sf::Color::Green);
     circleMaxElitism.setOutlineThickness(1); 
     circleMaxElitism.setFillColor(sf::Color::Transparent);
 		circles.push_back(circleMaxElitism);
 	}
+
+	mTextLegend[Evolution::Elitism].setFont(context.fonts->get(Fonts::Main2));
+	mTextLegend[Evolution::Elitism].setString("Elitism");
+	mTextLegend[Evolution::Elitism].setCharacterSize(windowSize.x/50.);
+	mTextLegend[Evolution::Elitism].setPosition(windowSize.x*13./20., windowSize.y*4./40.);
+	mTextLegend[Evolution::Elitism].setFillColor(sf::Color::Black);
+	
+	mTextLegend[Evolution::Crossover].setFont(context.fonts->get(Fonts::Main2));
+	mTextLegend[Evolution::Crossover].setString("Crossover");
+	mTextLegend[Evolution::Crossover].setCharacterSize(windowSize.x/50.);
+	mTextLegend[Evolution::Crossover].setPosition(windowSize.x*13./20., windowSize.y*5./40.);
+	mTextLegend[Evolution::Crossover].setFillColor(sf::Color::Black);
+	
+	mTextLegend[Evolution::Mutation].setFont(context.fonts->get(Fonts::Main2));
+	mTextLegend[Evolution::Mutation].setString("Mutation");
+	mTextLegend[Evolution::Mutation].setCharacterSize(windowSize.x/50.); 
+	mTextLegend[Evolution::Mutation].setPosition(windowSize.x*13./20., windowSize.y*6./40.);
+	mTextLegend[Evolution::Mutation].setFillColor(sf::Color::Black);
+	
+	mTextLegend[Evolution::NewChromosome].setFont(context.fonts->get(Fonts::Main2));
+	mTextLegend[Evolution::NewChromosome].setString("New Chromosomes");
+	mTextLegend[Evolution::NewChromosome].setCharacterSize(windowSize.x/50.); 
+	mTextLegend[Evolution::NewChromosome].setPosition(windowSize.x*13./20., windowSize.y*7./40.);
+	mTextLegend[Evolution::NewChromosome].setFillColor(sf::Color::Black);
+
+
+	mCircleLegend[Evolution::Elitism].setRadius (3.);
+	mCircleLegend[Evolution::Elitism].setFillColor(sf::Color::Green);
+	mCircleLegend[Evolution::Elitism].setPosition(windowSize.x*25/40, windowSize.y*9./80.);
+	mCircleLegend[Evolution::Crossover].setRadius (3.);
+	mCircleLegend[Evolution::Crossover].setFillColor(sf::Color::Blue);
+	mCircleLegend[Evolution::Crossover].setPosition(windowSize.x*25/40, windowSize.y*11./80.);
+	mCircleLegend[Evolution::Mutation].setRadius (3.);
+	mCircleLegend[Evolution::Mutation].setFillColor(sf::Color::Red);
+	mCircleLegend[Evolution::Mutation].setPosition(windowSize.x*25/40, windowSize.y*13./80.);
+	mCircleLegend[Evolution::NewChromosome].setRadius (3.);
+	mCircleLegend[Evolution::NewChromosome].setFillColor(sf::Color::Magenta);
+	mCircleLegend[Evolution::NewChromosome].setPosition(windowSize.x*25/40, windowSize.y*15./80.);
+
 
 	// vector<array< sf::CircleShape, Evolution::TypeCount>> chromosomesMax;
 	// vector<array< sf::CircleShape, Evolution::TypeCount>> chromosomesMin;
@@ -206,6 +249,12 @@ void StateResult::draw()
 
   for (int ii = 0; ii < circles.size(); ++ii){        
 	  window.draw(circles[ii]);
+  }  
+	
+
+  for (int ii = 0; ii < Evolution::TypeCount; ++ii){        
+	  window.draw(mTextLegend[ii]);
+	  window.draw(mCircleLegend[ii]);
   }  
 
 	window.draw( mTextXLabel );

@@ -9,6 +9,7 @@
 #include <cmath>
 #include <random>
 
+#include "../SoundPlayer.hpp"
 #include "../State.hpp"
 #include "../ResourceHolder.hpp"
 
@@ -26,6 +27,8 @@ public:
     bool		handleEvent(const sf::Event& event);
                 
 private:
+    SoundPlayer&			mSounds;
+
     sf::Vector2f 			 windowSize;
 
     std::vector<std::array<float, 2>>	customCoords;
