@@ -11,7 +11,7 @@ Result Analysis: Displays the optimal route and corresponding distance informati
 
 ## Tech Stack
 
-Programming Language: Modern c++
+Programming Language: Modern c++ ( MinGW32 windows )
 
 Libraries: SFML
 
