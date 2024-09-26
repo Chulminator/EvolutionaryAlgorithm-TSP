@@ -2,6 +2,8 @@
 
 "EvolutionaryAlgorithm-TSP-Visualizer" is a visualization tool that utilizes genetic algorithms to solve the Traveling Salesman Problem (TSP). This project aims to help users understand the complexity of the TSP and visually demonstrate how evolutionary algorithms operate.
 
+![Overview](https://github.com/user-attachments/assets/50eea0b4-3cb9-41ca-b1dc-0bdf29f47802)
+
 ## Key Features
 
 Genetic Algorithm Implementation: Employs a genetic algorithm to explore optimal routes for solving the TSP.
