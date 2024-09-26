@@ -236,7 +236,7 @@ void MainStep3::proceedTSP(){
   fflush(fileHistory); 
   if( distanceHistory.back() == distancePrev ){
     fclose(fileHistory);
-    mText1.setString("Step 3: Converged! Press 'Enter' for the next\nCurrent Generation: " + to_string(tsp.getGeneration()));
+    mText1.setString("Step 3: Converged! Press 'Enter' for the result\nCurrent Generation: " + to_string(tsp.getGeneration()));
     isConverged = true;
     isRunning   = false;
     
