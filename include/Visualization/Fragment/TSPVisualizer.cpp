@@ -1,187 +1,201 @@
  
-#include "TSP.hpp"
+#include "TSPVisualizer.hpp"
 
-
-
-TSP::TSP(int nCity_, int nChromosome_)
-: nCity(nCity_), nChromosome(nChromosome_) 
-, coord(nCity_) 
-, vecChromosome(nChromosome_, vector<int>(nCity))
-, vecNewChromosome(nChromosome_, vector<int>(nCity))
-, vecDistance(nChromosome_, 0.0)
-, idxSort(nChromosome_)
-, nGeneration(1)
-, evol()
-, gen(rd())
-, idxChromosome(0)
-, mutationRate(0.3)
-, crossoverRate(0.4)
+TSPVisualizer::TSPVisualizer()
+: transparency(255)
 {
-  generateCity();
-  generateChromosome();
-
-  nPrevious      = static_cast<int>(nChromosome * 0.2); 
-  nNewlyCreation = static_cast<int>(nChromosome * 0.2);
-  nCrossover     = static_cast<int>(nChromosome * 0.3);
-  nMutation      = nChromosome - nPrevious - nNewlyCreation - nCrossover;
-
-  nParent        = static_cast<int>(nChromosome * 0.5);
-  
-  printf("==================================\n");
-  printf("Chromosome from the previous:\t%d\n", nPrevious);
-  printf("Chromosome newly created:\t%d\n", nNewlyCreation);
-  printf("Chromosome from the Crossover:\t%d\n", nCrossover);
-  printf("Chromosome from the Mutation:\t%d\n", nMutation);
-  printf("==================================\n");
+  font.loadFromFile(".\\Media\\times.ttf");
 }
 
-void TSP::generateCity() {
-  for (int ii = 0; ii < nCity; ii++) {
-    double theta = ii / static_cast<double>(nCity) * PI * 2.0;
-    coord[ii][0] = cos(theta);
-    coord[ii][1] = sin(theta);
+// void TSPVisualizer::setGeometry(const vector<int>& vecChromosome,
+//                                 const vector<array<float, 2>>& coords){ 
+//   int nCity = vecChromosome.size();
+
+//   points.clear();
+//   lines.clear(); 
+
+//   lines.resize(nCity);
+//   for (int ii = 0; ii < nCity; ++ii){ 
+//     sf::CircleShape circle(5); // radius setting
+//     // circle.setPosition(sf::Vector2f(coords[ii][0], coords[ii][1])); // 원의 위치 설정
+//     circle.setPosition(sf::Vector2f(coords[ii][0], coords[ii][1])); // 원의 위치 설정
+//     circle.setFillColor(sf::Color::Black); // 색상 설정
+//     sf::Color color = circle.getFillColor();
+//     // circle.setFillColor(sf::Color(50, 50, 50));
+//     circle.setFillColor(sf::Color(color.r/255*transparency, 
+//                                   color.g/255*transparency, 
+//                                   color.b/255*transparency ));
+//     points.push_back(circle); // 벡터에 추가
+//   }
+
+//   for (int ii = 0; ii < nCity; ++ii){   
+//     if (ii < nCity - 1) {
+//       lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+//                                   sf::Vector2f( coords[vecChromosome[ii+1]][0], coords[vecChromosome[ii+1]][1]),
+//                                   3.  );
+//     }
+//     else{
+//       lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+//                                   sf::Vector2f( coords[vecChromosome[0]][0], coords[vecChromosome[0]][1]),
+//                                   3.  );
+//     }
+//   }
+//   return;
+// }
+
+
+void TSPVisualizer::setCities( const vector<array<float, 2>>& coords_){
+  coords = coords_;
+  int nCity = coords.size();
+  points.clear();
+  for (int ii = 0; ii < nCity; ++ii){ 
+    sf::CircleShape circle(5); // radius setting
+    // circle.setPosition(sf::Vector2f(coords[ii][0], coords[ii][1])); // 원의 위치 설정
+    circle.setPosition(sf::Vector2f(coords[ii][0], coords[ii][1])); // 원의 위치 설정
+    circle.setFillColor(sf::Color::Black); // 색상 설정
+    sf::Color color = circle.getFillColor();
+    // circle.setFillColor(sf::Color(50, 50, 50));
+    circle.setFillColor(sf::Color(color.r/255*transparency, 
+                                  color.g/255*transparency, 
+                                  color.b/255*transparency ));
+    points.push_back(circle); // 벡터에 추가
+
   }
-  return;
+  return;  
 }
-
-void TSP::generateChromosome() {
-    std::default_random_engine engine(static_cast<unsigned int>(std::time(0)));    
-    for (int ii = 0; ii < nChromosome; ii++) {
-        for (int jj = 0; jj < nCity; jj++) {
-            vecChromosome[ii][jj] = jj; 
-        }
-        std::shuffle(vecChromosome[ii].begin(), vecChromosome[ii].end(), engine);
+                  
+void TSPVisualizer::setChromosome(const vector<int>& vecChromosome){
+  int nCity = vecChromosome.size();
+  lines.clear(); 
+  lines.resize(nCity);
+    // // // // // // //   
+  mTextsAtPoints.clear();
+  mTextsAtPoints.resize(nCity);
+    // // // // // // //   
+  for (int ii = 0; ii < nCity; ++ii){   
+    if (ii < nCity - 1) {
+      lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+                                  sf::Vector2f( coords[vecChromosome[ii+1]][0], coords[vecChromosome[ii+1]][1]),
+                                  3.  );
+    // // // // // // // 
+      mTextsAtPoints[ii].setFont(font);
+	    mTextsAtPoints[ii].setString(to_string(ii+1));
+      mTextsAtPoints[ii].setPosition( (coords[vecChromosome[ii]][0] + coords[vecChromosome[ii+1]][0])/2,
+                                           (coords[vecChromosome[ii]][1] + coords[vecChromosome[ii+1]][1])/2  );
+      mTextsAtPoints[ii].setCharacterSize(15);
+      mTextsAtPoints[ii].setFillColor(sf::Color::Black);
+    // // // // // // // 
     }
-    return;
-}
-
-void TSP::CalculateFitness() {
-    for (int jj = 0; jj < nChromosome; jj++) {
-        double distance = 0.0;
-        for (int ii = 0; ii < nCity - 1; ii++) {
-            distance += sqrt(pow(coord[vecNewChromosome[jj][ii]][0] - coord[vecNewChromosome[jj][ii + 1]][0], 2) +
-                             pow(coord[vecNewChromosome[jj][ii]][1] - coord[vecNewChromosome[jj][ii + 1]][1], 2));
-        }
-        distance += sqrt(pow(coord[vecNewChromosome[jj][0]][0] - coord[vecNewChromosome[jj][nCity - 1]][0], 2) +
-                         pow(coord[vecNewChromosome[jj][0]][1] - coord[vecNewChromosome[jj][nCity - 1]][1], 2));
-
-        vecDistance[jj] = distance;
+    else{
+      lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+                                  sf::Vector2f( coords[vecChromosome[0]][0], coords[vecChromosome[0]][1]),
+                                  3.  );
+    // // // // // // // 
+      mTextsAtPoints[ii].setFont( font );
+	    mTextsAtPoints[ii].setString(to_string(ii+1));
+      mTextsAtPoints[ii].setPosition( (coords[vecChromosome[ii]][0] + coords[vecChromosome[0]][0])/2,
+                                           (coords[vecChromosome[ii]][1] + coords[vecChromosome[0]][1])/2  );
+      mTextsAtPoints[ii].setCharacterSize(15);
+      mTextsAtPoints[ii].setFillColor(sf::Color::Black);
+    // // // // // // // 
     }
-    return;
-}
-
-int TSP::randomSelect(int num){
-  // randomly select two nums from 0 to num-1
-    std::uniform_int_distribution<> dis(0, num - 1);
-  return dis(gen);
-}
-
-void TSP::sortChromosome(){
-  initSortIndex();
-  std::sort (idxSort.begin (), idxSort.end (), [this] 
-      (int i1, int i2) {
-          return vecDistance[i1] < vecDistance[i2];
-      }
-  );
-}
-
-void TSP::initSortIndex(){
-  std::iota(idxSort.begin(), idxSort.end(), 0);  
-}
-
-bool TSP::endCondition(){
-  vecChromosome = vecNewChromosome;
-  ++nGeneration;
-  return vecDistance[idxSort[0]] > PI * 2 * 1.1;
-}
-
-void TSP::crossover(){
-  // crossover
-  idxChromosome = 0;
-  int nCityCrossover = static_cast<int>(nCity * crossoverRate);
-  for ( ; idxChromosome < nCrossover; ++idxChromosome ){      
-    int idxParent1 = randomSelect(nParent);      
-    int idxParent2;
-    do {
-        idxParent2 = randomSelect(nParent);
-    } while (idxParent1 == idxParent2); 
-    int start = randomSelect(nCity - nCityCrossover - 1);
-    int end   = start + nCityCrossover; 
-    vecNewChromosome[idxChromosome] =  
-    evol.orderCrossover( vecChromosome[idxSort[idxParent1]],
-                          vecChromosome[idxSort[idxParent2]],
-                          start,
-                          end);
-  }
-}
-
-void TSP::mutation(){
-  
-  int nCityMutation = static_cast<int>(nCity * mutationRate);
-  for ( int ii = 0; ii < nMutation; ++ii ){
-    int start = randomSelect(nCity - nCityMutation - 1);
-    int end   = start + nCityMutation; 
-    vecNewChromosome[idxChromosome] =  vecChromosome[idxSort[ii]];
-    evol.inversionMutation( vecNewChromosome[idxChromosome], start, end );
-    idxChromosome++;
-  }
-
-  return;
-}
-
-void TSP::newChromosome(){
-  std::default_random_engine engine(static_cast<unsigned int>(std::time(0)));
-  for (int ii = 0; ii < nNewlyCreation; ++ii) {
-    for (int jj = 0; jj < nCity; jj++) {
-        vecNewChromosome[idxChromosome][jj] = jj;
-    }    
-    std::shuffle(vecNewChromosome[idxChromosome].begin(), vecNewChromosome[idxChromosome].end(), engine);
-    idxChromosome++; 
-    // for (int jj = 0; jj < nCity; jj++) {
-    //   printf("%d ", vecNewChromosome[jj]);
-    // }
-    // printf("\n");
   }
   return;
 }
-    
-void TSP::previousChromosome(){
-  for (int ii = 0; ii < nPrevious; ii++) {
-    vecNewChromosome[idxChromosome++] = vecChromosome[idxSort[ii]];
+
+
+                  
+void TSPVisualizer::setChromosome(const vector<int>& vecChromosome, const sf::Color color){
+  int nCity = vecChromosome.size();
+  lines.clear(); 
+  lines.resize(nCity);
+    // // // // // // //   
+  mTextsAtPoints.clear();
+  mTextsAtPoints.resize(nCity);
+    // // // // // // //   
+  for (int ii = 0; ii < nCity; ++ii){   
+    if (ii < nCity - 1) {
+      lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+                                  sf::Vector2f( coords[vecChromosome[ii+1]][0], coords[vecChromosome[ii+1]][1]),
+                                  3.  );
+    // // // // // // // 
+      mTextsAtPoints[ii].setFont(font);
+	    mTextsAtPoints[ii].setString(to_string(ii+1));
+      mTextsAtPoints[ii].setPosition( (coords[vecChromosome[ii]][0] + coords[vecChromosome[ii+1]][0])/2,
+                                           (coords[vecChromosome[ii]][1] + coords[vecChromosome[ii+1]][1])/2  );
+      mTextsAtPoints[ii].setCharacterSize(15);
+      mTextsAtPoints[ii].setFillColor(sf::Color::Black);
+    // // // // // // // 
+    }
+    else{
+      lines[ii] = createLineShape(sf::Vector2f( coords[vecChromosome[ii]][0], coords[vecChromosome[ii]][1]),
+                                  sf::Vector2f( coords[vecChromosome[0]][0], coords[vecChromosome[0]][1]),
+                                  3.  );
+    // // // // // // // 
+      mTextsAtPoints[ii].setFont( font );
+	    mTextsAtPoints[ii].setString(to_string(ii+1));
+      mTextsAtPoints[ii].setPosition( (coords[vecChromosome[ii]][0] + coords[vecChromosome[0]][0])/2,
+                                           (coords[vecChromosome[ii]][1] + coords[vecChromosome[0]][1])/2  );
+      mTextsAtPoints[ii].setCharacterSize(15);
+      mTextsAtPoints[ii].setFillColor(sf::Color::Black);
+    // // // // // // // 
+    }
+    lines[ii].setFillColor(color);
   }
-  
+  return;
 }
 
-void TSP::solve(){
-  do {    
-    // Evolutionary algorithm
-    crossover();
-    mutation();
-    newChromosome();
-    previousChromosome();
 
-    CalculateFitness();    
-    sortChromosome();
-
-    printf("Generation: %d | Shortest distance: %e \n", nGeneration, vecDistance[idxSort[0]]);
-
-  }while( endCondition() );
+void TSPVisualizer::draw(sf::RenderTarget& target, sf::RenderStates states) const{
   
-  for ( int jj = 0; jj < nCity; ++jj ){        
-    printf( "%d ", vecNewChromosome[idxSort[0]][jj]);
+  states.transform *= getTransform();
+
+  int nCity = points.size();
+  for (int ii = 0; ii < nCity; ++ii){    
+	  target.draw(lines[ii], states);  
+  }
+  for (int ii = 0; ii < nCity; ++ii){        
+	  target.draw(points[ii], states);    
+  }  
+    // // // // // // //   
+  for (int ii = 0; ii < nCity; ++ii){        
+	  target.draw(mTextsAtPoints[ii], states);    
+  }  
+    // // // // // // //   
+  return;
+}
+
+sf::RectangleShape TSPVisualizer::createLineShape(const sf::Vector2f& start, 
+                                                  const sf::Vector2f& end, 
+                                                  float thickness) 
+{
+    // 라인의 길이와 각도 계산
+    float length = std::sqrt(std::pow(end.x - start.x, 2) + std::pow(end.y - start.y, 2));
+    float angle = std::atan2(end.y - start.y, end.x - start.x) * 180 / 3.14159; // 라인의 각도 (도 단위)
+
+    // 직사각형 생성
+    sf::RectangleShape line(sf::Vector2f(length, thickness));
+    line.setPosition(start);
+    line.setOrigin(0, thickness / 2); // 중심을 직사각형의 중간으로 설정
+    line.setRotation(angle); // 각도에 따라 회전
+    line.setFillColor(sf::Color::Red); // 색상 설정
+    sf::Color color = line.getFillColor();
+    line.setFillColor(sf::Color(color.r, color.g, color.b, transparency));
+
+    line.move(thickness*1.5, thickness*1.5);
+
+    return line; // 생성한 직사각형 반환
+}
+
+void TSPVisualizer::setTransparency(const int transparency_){
+  if( transparency < 0 ){
+    transparency = 0;
+  }
+  else if (transparency > 255 ){
+    transparency = 255;
+  }
+  else{
+    transparency = transparency_;
   }
 }
 
-    
-    // if( idxSort[0] < nCrossover){
-    //   printf("Crossover\n");
-    // }
-    // else if( idxSort[0] - nCrossover < nMutation ){
-    //   printf("Mutation\n");
-    // }
-    // else if( idxSort[0] - nCrossover - nMutation < nNewlyCreation ){
-    //   printf("NewlyGenerated\n");
-    // }
-    // else{
-    //   printf("Previous\n");
-    // }

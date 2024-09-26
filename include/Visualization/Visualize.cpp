@@ -3,16 +3,20 @@
 const sf::Time Visualization::TimePerFrame = sf::seconds(1.f/60.f);
 
 Visualization::Visualization()
-: mWindow(sf::VideoMode(800, 600), "Tetris Chulminator", sf::Style::Close)
+// : mWindow(sf::VideoMode(800, 600), "Evolutionary algorithm", sf::Style::Close | sf::Style::Resize, createContextSettings())
+// : mWindow(sf::VideoMode(1200, 900), "Evolutionary algorithm", sf::Style::Close, createContextSettings())
+: mWindow(sf::VideoMode(1200, 900), "Evolutionary algorithm", sf::Style::Close | sf::Style::Resize, createContextSettings())
 , mTextures()
 , mFonts()
 , mMusic()
 , mSounds()
+, analysisInfo()
 , mStateStack(State::Context(mWindow, 
 														mTextures,
 														mFonts, 
 														mMusic, 
-														mSounds))
+														mSounds,
+														analysisInfo))
 {
 	mWindow.setKeyRepeatEnabled(false);
 	mWindow.setVerticalSyncEnabled(true);
@@ -78,4 +82,12 @@ void Visualization::registerStates()
 {
 	mStateStack.registerState<StateLogo>(States::Logo);
 	mStateStack.registerState<StateHome>(States::Home);
+	mStateStack.registerState<StateMain>(States::Main);
+	mStateStack.registerState<StateResult>(States::Result);
+}
+
+sf::ContextSettings Visualization::createContextSettings() {
+    sf::ContextSettings settings;
+    settings.antialiasingLevel = 8; // Set the level of anti-aliasing
+    return settings;
 }

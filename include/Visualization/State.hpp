@@ -1,8 +1,9 @@
 #ifndef BOOK_STATE_HPP
 #define BOOK_STATE_HPP
 
-#include "./State/StateIdentifiers.hpp"
+#include "./States/StateIdentifiers.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "AnalysisInformation.hpp"
 
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
@@ -29,13 +30,15 @@ class State
 							TextureHolder& textures,
 						  FontHolder& fonts,
 							MusicPlayer& music,
-							SoundPlayer& sounds);
+							SoundPlayer& sounds,
+							AnalysisInfo& analysisInfo);
 
 			sf::RenderWindow*	window;			
 			TextureHolder*		textures;
 			FontHolder*			  fonts;
 			MusicPlayer*		  music;
 			SoundPlayer*		  sounds;
+			AnalysisInfo*    analysisInfo;
 		};
 
 

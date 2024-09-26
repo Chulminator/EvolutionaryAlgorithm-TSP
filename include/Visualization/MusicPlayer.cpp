@@ -6,12 +6,12 @@ MusicPlayer::MusicPlayer()
 , mFilenames()
 , mVolume(100.f)
 {	
-	mFilenames[Music::LogoTheme]    = "Media/Music/LogoSound.wav";
-	// mFilenames[Music::MenuTheme]    = "Media/Music/MenuTheme.ogg";
-	// mFilenames[Music::MissionTheme] = "Media/Music/MissionTheme.ogg";
-	// mFilenames[Music::SoundBar]     = "Media/Music/SoundBar.wav";
-	mFilenames[Music::GameMain]     = "Media/Music/GameMain.wav";
-	mFilenames[Music::GameEnd]     = "Media/Music/powerdown07.wav";
+	mFilenames[Music::LogoTheme]  = "Media/Music/LogoSound.wav";
+	mFilenames[Music::Home]       = "Media/Music/Happy-Boy-Theme-Kevin-MacLeod.wav";
+	mFilenames[Music::MainStep1]  = "Media/Music/Hot-Swing-Kevin-MacLeod.wav";
+	// mFilenames[Music::MainStep2]  = "Media/Music/SoundBar.wav";
+	mFilenames[Music::MainStep3]  = "Media/Music/Danse-Macabre-Busy-Strings-Kevin-MacLeod.wav";
+	mFilenames[Music::Result]     = "Media/Music/Light-Sting-Kevin-MacLeod.wav";
 }
 
 void MusicPlayer::play(Music::ID theme)

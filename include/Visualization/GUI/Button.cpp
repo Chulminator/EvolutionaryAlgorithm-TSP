@@ -10,18 +10,20 @@
 
 namespace GUI
 {
-
 Button::Button(State::Context context)
 : mCallback()
+, mWindow(*context.window)
 // , mSprite(context.textures->get(Textures::Buttons))
 , mBox(sf::Vector2f(100, 50))
-, mText("", context.fonts->get(Fonts::Main2), 35)
+// , mText("", context.fonts->get(Fonts::Main2), 35)
+, mText("", context.fonts->get(Fonts::Main2), context.window->getSize().x/25)
 , mIsToggle(false)
 , mSounds(*context.sounds)
 , mIsSelectable(true)
 {
+	mSounds.setVolume( 100 );
 	changeTexture(Normal);
-	sf::FloatRect bounds = mBox.getLocalBounds();
+	// sf::FloatRect bounds = mBox.getLocalBounds();
 	mBox.setFillColor(sf::Color(0,0,0,0));
 }
 
@@ -32,24 +34,22 @@ void Button::setCallback(Callback callback)
 
 void Button::setText(const std::string& text)
 {
-	mBox.setSize(sf::Vector2f(text.length()*20., 50.));
+	
+	// mBox.setSize(sf::Vector2f(text.length()*20., 50.));
+	mBox.setSize(sf::Vector2f(text.length()*20., mWindow.getSize().x/16));
 	mText.setString(text);
 	centerOrigin(mText);
 	mText.setPosition(text.length()*10., 25.);
 	mText.setFillColor(sf::Color::Black);
-
-	// mText.setPosition(mBox.getPosition());
-	// printf("%e\t%e\n",mBox.getPosition().x, mBox.getPosition().y);
-	// printf("%e\t%e\n",mText.getOrigin().x, mText.getOrigin().y);
-	// printf("%e\t%e\n",mBox.getOrigin().x, mBox.getOrigin().y);
-	// printf("=================\n");
-	// sf::FloatRect bounds = mBox.getLocalBounds();
-	// mText.setPosition(bounds.width / 2.f, bounds.height / 2.f);
 }
 
 void Button::setTextPosition(const sf::Vector2f &position)
 {
 	mText.setPosition(position);
+}
+
+void Button::setTextOrigin(float x, float y){
+	mText.setOrigin(x, y);
 }
 
 void Button::setTextPosition(float x, float y){
@@ -95,13 +95,13 @@ void Button::activate()
 
     // If we are toggle then we should show that the button is pressed and thus "toggled".
 	if (mIsToggle){
-		mSounds.play(SoundEffect::Click);
+		mSounds.play(SoundEffect::Cymbal1);
 		changeTexture(Pressed);
 	}
 
 	if (mCallback){
 		// mSounds.play(SoundEffect::Combo2);
-		mSounds.play(SoundEffect::Button);
+		mSounds.play(SoundEffect::Cymbal2);
 		mCallback();
 	}
 

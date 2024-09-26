@@ -50,6 +50,7 @@
     "streambuf": "cpp",
     "typeinfo": "cpp",
     "list": "cpp",
-    "set": "cpp"
+    "set": "cpp",
+    "fstream": "cpp"
   }
 }

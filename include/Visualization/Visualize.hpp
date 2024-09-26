@@ -3,17 +3,18 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics.hpp>
 
-// #include "CommandQueue.hpp"
-
 #include "MusicPlayer.hpp"
 #include "SoundPlayer.hpp"
 #include "ResourceIdentifiers.hpp"
+#include "AnalysisInformation.hpp"
 
 #include "StateStack.hpp"
 
-#include "./State/StateIdentifiers.hpp"
-#include "./State/StateLogo.hpp"
-#include "./State/StateHome.hpp"
+#include "./States/StateIdentifiers.hpp"
+#include "./States/StateLogo.hpp"
+#include "./States/StateHome.hpp"
+#include "./States/StateMain.hpp"
+#include "./States/StateResult.hpp"
 
 class Visualization : private sf::NonCopyable
 {
@@ -25,6 +26,8 @@ class Visualization : private sf::NonCopyable
 		void					processInput();
 		void					update(sf::Time elapsedTime);
 		void					render();
+
+		sf::ContextSettings createContextSettings();
 
 		void					registerStates();
 
@@ -38,4 +41,5 @@ class Visualization : private sf::NonCopyable
 		MusicPlayer				mMusic;
 		SoundPlayer				mSounds;
 		StateStack				mStateStack;
+		AnalysisInfo      analysisInfo;
 };
