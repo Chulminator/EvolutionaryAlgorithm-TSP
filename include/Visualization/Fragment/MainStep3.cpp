@@ -22,7 +22,7 @@ MainStep3::MainStep3(State::Context context)
   distanceHistory.resize(1000, std::numeric_limits<float>::max());
 
 	mText1.setFont(context.fonts->get(Fonts::Main2));
-	mText1.setString("Step 3\n Evolution - Press Enter to start");
+	mText1.setString("Step 3\n Evolution - Press 'Enter' to start");
 	mText1.setCharacterSize(context.window->getSize().x/25); // 글자 크기 설정 (50 포인트)
 	mText1.setPosition(windowSize.x/20, windowSize.y/20);
 	mText1.setFillColor(sf::Color::Black);
