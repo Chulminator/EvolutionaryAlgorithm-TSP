@@ -29,13 +29,18 @@ Hot-Swing-Kevin-MacLeod
 
 Light-Sting-Kevin-MacLeod
 
-Loping-Sting-Kevin-MacLeod
-
-
 ```text
-Light Sting by Kevin MacLeod is licensed under a Creative Commons Attribution 4.0 license. https://creativecommons.org/licenses/by/4.0/
+Songs above by Kevin MacLeod is licensed under a Creative Commons Attribution 4.0 license. 
 
-Source: http://incompetech.com/music/royalty-free/index.html?isrc=USUAN1100433
+https://creativecommons.org/licenses/by/4.0/
+
+Danse Macabre - Busy Strings: http://incompetech.com/music/royalty-free/...
+
+Happy Boy Theme: http://incompetech.com/music/royalty-free/...
+
+Hot Swing : http://incompetech.com/music/royalty-free/...
+
+Light Sting: http://incompetech.com/music/royalty-free/...
 
 Artist: http://incompetech.com/
 ```
